@@ -24,9 +24,7 @@ var Main = React.createClass({
     // if token exists, take user to playlist
     if (jwt) {
       // change trigger state
-      this.setState({hasToken: true});
-      this.setState({showAuth: false});
-      this.setState({showPlaylist: true});
+      this.setState({hasToken: true, showAuth: false, showPlaylist: true});
       // save context in variable
       var self = this;
 
