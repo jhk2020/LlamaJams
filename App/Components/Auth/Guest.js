@@ -3,12 +3,21 @@ var helpers = require('../../utils/helpers');
 
 var Guest = React.createClass({
 
+
+	submitHandler: function(e) {
+    e.preventDefault();
+		var newCode = this.refs.playlistCode.getDOMNode().value;
+		console.log('GUEST CODE:', newCode);
+		this.props.updateCode(newCode);
+	},
+
   submitHandler: function(e) {
     e.preventDefault();
     var newCode = this.refs.playlistCode.getDOMNode().value;
     console.log('GUEST CODE:', newCode);
     this.props.updateCode(newCode);
   },
+
 
   render: function() {
     return (

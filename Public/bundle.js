@@ -59,9 +59,7 @@
 	    return {
 	      showAuth: true,
 	      showPlaylist: false,
-	      playlistCode: '',
-	      check: false,
-	      hasToken: false
+	      playlistCode: ''
 	    };
 	  },
 
@@ -73,7 +71,6 @@
 	    // if token exists, take user to playlist
 	    if (jwt) {
 	      // change trigger state
-	      this.setState({ hasToken: true });
 	      this.setState({ showAuth: false });
 	      this.setState({ showPlaylist: true });
 	      // save context in variable
@@ -88,29 +85,20 @@
 	      });
 	    } else {
 	      console.log('NO TOKEN FOUND');
-	      var self = this;
-	      var playlistCode = this.state.playlistCode;
-	      helpers.checkCode(playlistCode).then(function (snapshot) {
-	        for (var code in snapshot.val()) {
-	          if (code === self.state.playlistCode) {
-	            console.log('inside else statement of showinput:');
-	            self.setState({ check: false, showAuth: false, showPlaylist: true });
-	          } else {
-	            if (playlistCode.length > 1) {
-	              self.setState({ check: true });
-	            }
-	          }
-	        }
-	      });
+
+	      // if no token but playlist code exists, take user to playlist
+	      if (this.state.playlistCode.length > 0) {
+	        console.log('inside else statement of showinput:', this.state.playlistCode);
+	        this.setState({ showAuth: false });
+	        this.setState({ showPlaylist: true });
+	      }
 	    }
 	  },
 
 	  updateCode: function updateCode(newCode) {
 	    console.log('before stateChange:', newCode);
 	    // change playlist code and re-render main component
-	    this.setState({ playlistCode: newCode }, function () {
-	      this.showInput();
-	    });
+	    this.setState({ playlistCode: newCode }, this.showInput);
 	    console.log('in updateCode:', this.state.playlistCode);
 	  },
 
@@ -130,16 +118,7 @@
 	      React.createElement(
 	        'div',
 	        null,
-	        this.state.showPlaylist ? React.createElement(Playlist, { hasToken: this.state.hasToken, playlistCode: this.state.playlistCode }) : null
-	      ),
-	      React.createElement(
-	        'div',
-	        null,
-	        this.state.check ? React.createElement(
-	          'h1',
-	          null,
-	          'Playlist Not Found'
-	        ) : null
+	        this.state.showPlaylist ? React.createElement(Playlist, { playlistCode: this.state.playlistCode }) : null
 	      )
 	    );
 	  }
@@ -23833,11 +23812,6 @@
 	    playlistRef.set(refactored);
 
 	    return playlistCode;
-	  },
-
-	  checkCode: function checkCode(code) {
-	    console.log('inside checkcode:', code);
-	    return fpRef.once('value');
 	  }
 	};
 
@@ -31584,7 +31558,8 @@
 			return React.createElement(
 				'div',
 				{ className: 'bigger-container' },
-				React.createElement(SongEntry, this.props)
+				React.createElement(SongEntry, this.props),
+				this.props.playlistCode
 			);
 		}
 	});
@@ -31606,11 +31581,8 @@
 	var SongEntry = React.createClass({
 	  displayName: 'SongEntry',
 
-	  loadSongsFromServer: function loadSongsFromServer(receivedCode) {
-
-	    this.firebaseRef = new Firebase('https://llamajamsauth.firebaseio.com/' + receivedCode + '/playlist');
-	    console.log(receivedCode);
-	    console.log("loading songs");
+	  loadSongsFromServer: function loadSongsFromServer() {
+	    this.firebaseRef = new Firebase('https://llamajams.firebaseio.com/Irving101');
 
 	    this.firebaseRef.on('child_added', (function (snapshot) {
 
@@ -31652,12 +31624,6 @@
 	    }).bind(this));
 	  },
 
-	  getDefaultProps: function getDefaultProps() {
-	    return {
-	      playlistCode: ''
-	    };
-	  },
-
 	  getInitialState: function getInitialState() {
 	    this.items = [];
 	    return {
@@ -31665,17 +31631,12 @@
 	      active: false,
 	      input: '',
 	      searchResults: [],
-	      toggle: false,
-	      hasToken: false
+	      toggle: false
 	    };
 	  },
 
-	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	    this.state.hasToken = nextProps.hasToken;
-	    console.log('receiving props:', nextProps.playlistCode);
-	    var receivedCode = nextProps.playlistCode;
-	    this.loadSongsFromServer(receivedCode);
-	    this.rerenderPlaylist();
+	  componentWillMount: function componentWillMount() {
+	    this.loadSongsFromServer();
 	  },
 
 	  handleSearchInput: function handleSearchInput(inputSearch) {
@@ -31799,7 +31760,6 @@
 	  },
 
 	  render: function render() {
-	    console.log('rendered:', this.props.playlistCode);
 	    var songStructure = this.state.songs.map(function (song, i) {
 	      return React.createElement(Song, { data: song, key: i });
 	    });
@@ -31831,7 +31791,12 @@
 	    return React.createElement(
 	      'div',
 	      null,
-	      this.state.hasToken ? React.createElement(Player, { togglePlayer: this.playPause }) : null,
+	      React.createElement(
+	        'h1',
+	        null,
+	        this.props.playlistCode
+	      ),
+	      React.createElement(Player, { togglePlayer: this.playPause }),
 	      React.createElement(Search, { checkClick: this.handleSearchInput }),
 	      React.createElement(
 	        'div',
@@ -31847,12 +31812,8 @@
 	  },
 
 	  componentDidMount: function componentDidMount() {
-	    if (this.props.playlistCode.length > 0) {
-	      this.loadSongsFromServer(this.props.playlistCode);
-	      this.rerenderPlaylist();
-	    }
+	    this.rerenderPlaylist();
 	  }
-
 	});
 
 	module.exports = SongEntry;

@@ -10,6 +10,9 @@ var Main = React.createClass({
     return {
       showAuth: true,
       showPlaylist: false,
+      playlistCode: ''
+    };
+  },
       playlistCode: '',
       check: false,
       hasToken: false
@@ -24,7 +27,9 @@ var Main = React.createClass({
     // if token exists, take user to playlist
     if (jwt) {
       // change trigger state
+
       this.setState({hasToken: true, showAuth: false, showPlaylist: true});
+
       // save context in variable
       var self = this;
 
@@ -40,6 +45,14 @@ var Main = React.createClass({
 
     } else {
       console.log('NO TOKEN FOUND');
+
+      // if no token but playlist code exists, take user to playlist
+      if (this.state.playlistCode.length > 0) {
+        console.log('inside else statement of showinput:', this.state.playlistCode);
+        this.setState({showAuth: false});
+        this.setState({showPlaylist: true});
+      }
+
       var self = this;
       var playlistCode = this.state.playlistCode;
       helpers.checkCode(playlistCode)
@@ -62,6 +75,7 @@ var Main = React.createClass({
     console.log('before stateChange:', newCode);
     // change playlist code and re-render main component
     this.setState({playlistCode: newCode}, function() {
+      console.log('here');
       this.showInput();
     });
     console.log('in updateCode:', this.state.playlistCode);

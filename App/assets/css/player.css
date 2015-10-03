@@ -3,10 +3,9 @@
 }
 
 body {
-  font-family: 'Lato-thin';
+  font-family: 'Open Sans';
   letter-spacing: 0.2px;
   background-image: url('../img/blur.jpg');
-  background-size: cover;
   background-repeat: no-repeat;
   background-position: absolute;
   height: 100%;
@@ -59,8 +58,14 @@ body {
 }
 
 .song-view{
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 17px;
+  font-weight:580;
+}
+
+.artist-view{
+  font-size: 15px;
+  font-weight:100;
+  padding-top: 4px;
 }
 
 .artist-view{
@@ -83,35 +88,17 @@ body {
 }
 
 .searchbar input {
-  font-family: 'Lato-thin';
+  font-family: 'Open Sans';
   font-size: 13px;
   color: #000;
   border-width: 0px;
   width: 100%;
   height: 20px;
-  border-radius: 5px;
-  background-color: white;
-  opacity: 0.2;
+  border-radius: 50px;
+  background-color: transparent;
   border-color: #fff;
-  padding-left: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-.searchbar input:hover {
-  font-family: 'Lato-thin';
-  font-size: 13px;
-  color: #000;
-  border-width: 0px;
-  width: 100%;
-  height: 20px;
-  border-radius: 5px;
-  background-color: white;
-  opacity: 0.4;
-  border-color: #fff;
-  padding-left: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  border-width: 1px;
+  border-style: solid;
 }
 
 /*close box*/
@@ -135,7 +122,7 @@ body {
 }
 
 .song-results {
-  font-family: 'Lato-thin';
+  font-family: 'Open Sans';
   font-size: 13px;
   font-color: #ccc;
   padding-left: 2px;
@@ -145,7 +132,7 @@ body {
 
 .song-results a {
   display: block;
-  font-family: 'Lato-thin';
+  font-family: 'Open Sans';
   font-size: 13px;
   color: #ccc;
   text-decoration: none;
@@ -155,7 +142,7 @@ body {
 }
 
 .song-results a:hover {
-  font-family: 'Lato-thin';
+  font-family: 'Open Sans';
   background-color: #383838;
   font-size: 13px;
   font-color: #666;

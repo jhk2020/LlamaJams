@@ -29,6 +29,7 @@ module.exports = {
     console.log("PLAYLIST CODE CREATED:", playlistCode);
 
     // create TOKEN
+
 		var token = tokenGenerator.createToken({"uid": "asfass23j4io32e23in", "playlistCode": playlistCode, "isOwner": true});
 		console.log('HOST TOKEN CREATED:', token);
 
@@ -42,6 +43,9 @@ module.exports = {
 		
 		var playlistRef = new Firebase("https://llamajamsauth.firebaseio.com/" + playlistCode);
 
+		return playlistCode;
+	}
+
     // set the refactored data in database
     playlistRef.set(refactored);
 
@@ -53,5 +57,4 @@ module.exports = {
     return fpRef.once('value');
   }
 }
-
 
