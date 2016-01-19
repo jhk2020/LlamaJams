@@ -1,28 +1,29 @@
-var React = require('react');
-var SongEntry = require('./SongEntry');
+import React, { Component } from 'react';
+import SongEntry from './SongEntry';
 
 //basic playlist skeleton for each page
-var Playlist = React.createClass({
+export default class Playlist extends Component {
 
 //logout clears the local storage so that the user is able to redirect to the home and recreate the page
-  logout: function() {
+  logout() {
     localStorage.clear();
     location.reload();
-  },
+  }
 
   //background color is a state so that it could be used for changing the css when it renders
-  getInitialState: function() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       backgroundColor: '#34344d'
     }
-  },
+  }
 
   //uses jQuery to set the background-color according to which page you're on
-  componentWillMount: function() {
+  componentWillMount() {
     $('body').css('background-color', this.state.backgroundColor);
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <div className='music-page'>
         <div className='playlistcode-container'>
@@ -34,12 +35,9 @@ var Playlist = React.createClass({
           </button>
         </div>
         <div className='bigger-container'>
-        //passes in all the child props to songEntry, the parent
-          <SongEntry {...this.props}/>
+          <SongEntry {...this.props} />
         </div>
       </div>
     );
   }
-});
-
-module.exports = Playlist;
+};

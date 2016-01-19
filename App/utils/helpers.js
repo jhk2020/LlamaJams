@@ -14,7 +14,7 @@ var tokenGenerator = new FirebaseTokenGenerator('VgF8MXKNUfEnzygDAERDZdiLPUS86W4
 
 
 module.exports = {
- 
+
   // RETURNING HOST
   authHost: function(token) {
     // authenticate with token
@@ -37,7 +37,7 @@ module.exports = {
 			playlist: 'playlist',
 			playlistCode: playlistCode
 		};
-		
+
 		var playlistRef = new Firebase("https://llamajamsauth.firebaseio.com/" + playlistCode);
 
     // set the refactored data in database with playlistCode as item name
@@ -52,4 +52,3 @@ module.exports = {
     return fpRef.once('value');
   }
 }
-

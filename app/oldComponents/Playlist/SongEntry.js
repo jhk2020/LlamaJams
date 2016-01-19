@@ -6,8 +6,7 @@ var Firebase = require('firebase');
 
 
 var SongEntry = React.createClass({
-  // This function fetches the right playlist from Firebase based on
-  // your playlist code.
+  // This function fetches the right playlist from Firebase based on your playlist code.
   loadSongsFromServer: function(receivedCode) {
     this.firebaseRef = new Firebase('https://llamajamsauth.firebaseio.com/' + receivedCode + '/playlist');
 
@@ -147,7 +146,7 @@ var SongEntry = React.createClass({
     if(this.state.searchResults.length > 0) {
       this.setState({ searchResults: this.state.searchResults.slice(0) })
       this.forceUpdate();
-    } 
+    }
     SC.get('http://api.soundcloud.com/tracks/', { q: inputSearch, limit: 7 }, function(tracks) {
     // Display each song title and an option to add '+' to host playlist
       var obj = [];
@@ -160,8 +159,8 @@ var SongEntry = React.createClass({
           songUrl: eachUrl
         });
        }
-      this.setState({ 
-        searchResults: obj 
+      this.setState({
+        searchResults: obj
       })
    }.bind(this));
   },
@@ -179,7 +178,7 @@ var SongEntry = React.createClass({
       }
     } else {
       var display = {
-        display: 'none' 
+        display: 'none'
       }
     }
     return (
