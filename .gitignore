@@ -14,7 +14,8 @@ Icon
 .Spotlight-V100
 .Trashes
 node_modules/
-public/bundle.js
+bower_components/
+*bundle.js
 
 #Floobits
 .floo

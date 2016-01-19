@@ -8,24 +8,24 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/IrvingAxelB/LlamaJams.git"
+    "url": "git+https://github.com/LlamaJams/LlamaJams.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/IrvingAxelB/LlamaJams/issues"
+    "url": "https://github.com/LlamaJams/LlamaJams/issues"
   },
-  "homepage": "https://github.com/IrvingAxelB/LlamaJams#readme",
+  "homepage": "https://github.com/LlamaJams/LlamaJams#readme",
   "dependencies": {
     "babel-core": "^5.8.25",
     "babel-loader": "^5.3.2",
+    "bluebird": "^2.10.1",
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
     "firebase": "^2.3.1",
     "firebase-token-generator": "^2.0.0",
+    "fireproof": "^3.0.3",
     "react": "^0.13.3",
-    "react-router-component": "^0.26.1",
-    "reactify": "^1.1.1",
     "webpack": "^1.12.2"
   }
 }

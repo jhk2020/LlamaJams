@@ -3,11 +3,17 @@
 <head>
   <meta charset='UTF-8'>
   <title>Llama Jams</title>
-  <link rel='stylesheet' media='' href='https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css'>
-
+  <link rel="stylesheet" href='assets/css/player.css' type='text/css'>
+  <script src='bower_components/jquery/dist/jquery.min.js'></script>
+  <script src="http://connect.soundcloud.com/sdk.js"></script>
 </head>
 <body>
-  <div id="app"></div>
-  <script src="bundle.js"></script>
+  <div id='app'></div>
+  <script>
+  SC.initialize({
+    client_id: '05eba237dc393dc1cd0b0302d74a521c'
+  });
+  </script>
+  <script src='bundle.js'></script>
 </body>
 </html>
