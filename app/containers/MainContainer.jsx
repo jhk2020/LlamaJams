@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { routeActions } from 'redux-simple-router';
+import { redirectToLogin } from '../actions/authActions';
 
 class Main extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hello: 'hello'
-    }
-  }
   componentWillMount() {
-    if (!localStorage.getItem('id_token')) {
+    if (!this.props.isAuthenticated) {
       this.props.goToLogin();
     }
   }
+
   render() {
     return (
       <div>
@@ -24,15 +20,18 @@ class Main extends Component {
 }
 
 
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  }
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     goToLogin: () => {
-      dispatch(routeActions.push('/login'));
+      dispatch(redirectToLogin());
     }
   }
 }
 
-export default connect (
-  null,
-  mapDispatchToProps
-)(Main);
+export default connect (mapStateToProps,mapDispatchToProps)(Main);

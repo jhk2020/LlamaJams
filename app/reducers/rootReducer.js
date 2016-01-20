@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import { routeReducer } from 'redux-simple-router';
-import home from './homeReducer';
+import auth from './authReducer';
 
 const rootReducer = combineReducers({
-  home,
+  auth,
   routing: routeReducer
 });
 

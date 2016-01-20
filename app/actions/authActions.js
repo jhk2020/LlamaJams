@@ -1,4 +1,5 @@
 import { routeActions } from 'redux-simple-router';
+import jwt_decode from 'jwt-decode';
 
 export function showForm(formType) {
   return {
@@ -21,10 +22,10 @@ function loginSuccess(user) {
   }
 }
 
-function loginError(err) {
+function loginError(error) {
   return {
     type: 'LOGIN_ERROR',
-    err
+    error
   }
 }
 
@@ -32,7 +33,7 @@ export function loginUser(credentials) {
   return dispatch => {
     dispatch(requestLogin(credentials));
 
-    return fetch('http://localhost:5000/auth/getToken', {
+    return fetch('http://localhost:5000/api/authenticate', {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -45,16 +46,20 @@ export function loginUser(credentials) {
       })
     })
       .then(response => {
-        return response.json())
-        .then(response) => {
-          if (!response.ok) {
-            dispatch(loginError(user.message));
-            return Promise.reject(user)
-          } else {
-            localStorage.setItem('token', user.id_token);
-            dispatch(loginSuccess(user));
-          }
-        }).catch(err => console.error('Error: ', err));
+        return response.json();
+      })
+      .then(response => {
+        try {
+          let decoded = jwt_decode(response.token);
+          localStorage.setItem('token', response.token);
+          dispatch(loginSuccess(decoded));
+          dispatch(routeActions.push('/'));
+        } catch (e) {
+          console.log(response);
+          dispatch(loginError(response.error));
+        }
+      })
+      .catch(err => console.error('Error: ', err));
   }
 }
 
@@ -75,5 +80,11 @@ export function logoutUser() {
     dispatch(requestLogout());
     localStorage.removeItem('id_token');
     dispatch(logoutSuccess());
+  }
+}
+
+export function redirectToLogin() {
+  return dispatch => {
+    dispatch(routeActions.push('/login'));
   }
 }

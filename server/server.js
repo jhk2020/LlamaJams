@@ -43,8 +43,8 @@ app.use(express.static(__dirname + '/../public'));
 /*--------------------------- UNPROTECTED ROUTES -----------------------------*/
 app.post('/users', function(req, res) {
   var newUser = new User({
-    username: req.body.user.username,
-    password: req.body.user.password
+    username: req.body.username,
+    password: req.body.password
   });
   newUser.save(function(err) {
     if (err) {
@@ -62,7 +62,7 @@ var apiRoutes = express.Router();
 
 apiRoutes.post('/authenticate', function(req, res) {
   User.findOne({
-    username: req.body.user.username
+    username: req.body.username
   }, function(err, user) {
     if (err) {
       console.error('Error finding user: ', err);
@@ -70,7 +70,7 @@ apiRoutes.post('/authenticate', function(req, res) {
     if (!user) {
       res.status(401).send({error: 'User doesn`t exist.'});
     } else if (user) {
-      if (user.password !== req.body.user.password) {
+      if (user.password !== req.body.password) {
         res.status(401).send({error: 'Authentication failed. Wrong password.'});
       } else {
         var token = jwt.sign({username: user.username}, app.get('secret'), {

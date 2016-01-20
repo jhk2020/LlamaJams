@@ -27,10 +27,12 @@ export default class LoginForm extends Component {
       this.setState({
         username: 'Fill in username!'
       });
+      return;
     } else if (!this.state.password) {
       this.setState({
         password: 'Fill in password!'
-      })
+      });
+      return;
     }
     this.props.loginUser({
       username: this.state.username,
@@ -62,6 +64,7 @@ export default class LoginForm extends Component {
           <br />
           <input type='submit' value='Post' />
         </form>
+        {this.props.errorMessage ? <p>{this.props.errorMessage}</p> : null}
       </div>
     )
   }

@@ -1,12 +1,12 @@
 const initialState = {
   isFetching: false,
-  isAuthenticated: localStorage.getItem('id_token') ? true : false,
+  isAuthenticated: localStorage.getItem('token') ? true : false,
   username: '',
   errorMessage: '',
   showForm: ''
 }
 
-export default function home(state = initialState, action) {
+export default function auth(state = initialState, action) {
   switch (action.type) {
     case 'SHOW_FORM':
       return Object.assign({}, state, {
@@ -28,11 +28,11 @@ export default function home(state = initialState, action) {
         username: action.user.username
       });
 
-    case 'LOGIN_FAILURE':
+    case 'LOGIN_ERROR':
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: false,
-        errorMessage: action.message
+        errorMessage: action.error
       });
 
     case 'REQUEST_LOGOUT':

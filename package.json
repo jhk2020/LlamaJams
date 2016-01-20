@@ -26,6 +26,7 @@
     "fireproof": "^3.0.3",
     "history": "^2.0.0-rc2",
     "jsonwebtoken": "^5.5.4",
+    "jwt-decode": "^1.5.1",
     "mongoose": "^4.3.6",
     "morgan": "^1.6.1",
     "react": "^0.14.6",
