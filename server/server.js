@@ -42,18 +42,33 @@ app.use(express.static(__dirname + '/../public'));
 
 /*--------------------------- UNPROTECTED ROUTES -----------------------------*/
 app.post('/users', function(req, res) {
-  var newUser = new User({
-    username: req.body.username,
-    password: req.body.password
-  });
-  newUser.save(function(err) {
-    if (err) {
-      console.error('Error adding new user: ', err);
-      return;
+  User.findOne({
+    username: req.body.username
+  }, function(err, user) {
+    if (user) {
+      res.status(400).send({error: 'Username already exists.'});
+    } else {
+      var newUser = new User({
+        username: req.body.username,
+        password: req.body.password
+      });
+      newUser.save(function(err) {
+        if (err) {
+          console.error('Error adding new user: ', err);
+          return;
+        }
+        console.log('User saved successfully: ', newUser);
+        var token = jwt.sign({username: newUser.username}, app.get('secret'), {
+                      expiresIn: '1d'
+                    });
+
+        res.status(201).send({
+          message: 'Enjoy your token!',
+          token: token
+        });
+      });
     }
-    console.log('User saved successfully: ', newUser);
-    res.sendStatus(200);
-  })
+  });
 });
 
 /*---------------------------- API ROUTES -----------------------------------*/
@@ -74,8 +89,8 @@ apiRoutes.post('/authenticate', function(req, res) {
         res.status(401).send({error: 'Authentication failed. Wrong password.'});
       } else {
         var token = jwt.sign({username: user.username}, app.get('secret'), {
-          expiresIn: '1d'
-        });
+                      expiresIn: '1d'
+                    });
 
         res.status(201).send({
           message: 'Enjoy your token!',

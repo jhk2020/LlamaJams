@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-import SongEntry from './SongEntry';
+import Search from '../../containers/SearchbarContainer';
 
-//basic playlist skeleton for each page
 export default class Playlist extends Component {
-
-//logout clears the local storage so that the user is able to redirect to the home and recreate the page
   logout() {
     localStorage.clear();
     location.reload();
   }
 
-  //background color is a state so that it could be used for changing the css when it renders
   constructor(props) {
     super(props);
     this.state = {
@@ -18,10 +14,8 @@ export default class Playlist extends Component {
     }
   }
 
-  //uses jQuery to set the background-color according to which page you're on
   componentWillMount() {
-    debugger;
-    // $('body').css('background-color', this.state.backgroundColor);
+    $('body').css('background-color', this.state.backgroundColor);
   }
 
   render() {
@@ -36,7 +30,7 @@ export default class Playlist extends Component {
           </button>
         </div>
         <div className='bigger-container'>
-          <SongEntry {...this.props} />
+          <Search />
         </div>
       </div>
     );

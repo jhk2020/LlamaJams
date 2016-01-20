@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import LoginForm from '../components/LoginForm';
-import SignUpForm from '../components/SignUpForm';
+import LoginForm from './LoginForm';
+import SignUpForm from './SignUpForm';
 
 const Forms = ({showForm, errorMessage, actions}) => {
-  const { loginUser } = actions;
+  const { loginUser, signupUser } = actions;
   return (
     <div>
       {showForm === 'login' ?
         <LoginForm loginUser={loginUser} errorMessage={errorMessage} />
-        : <SignUpForm />
+        : <SignUpForm signupUser={signupUser} errorMessage={errorMessage} />
       }
     </div>
   )

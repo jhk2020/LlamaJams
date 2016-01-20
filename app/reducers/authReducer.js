@@ -13,6 +13,20 @@ export default function auth(state = initialState, action) {
         showForm: action.formType
       });
 
+    case 'REQUEST_SIGNUP':
+      return Object.assign({}, state, {
+        isFetching: true,
+        isAuthenticated: false,
+        username: action.info.username
+      });
+
+    case 'SIGNUP_ERROR':
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuthenticated: false,
+        errorMessage: action.error
+      })
+
     case 'REQUEST_LOGIN':
       return Object.assign({}, state, {
         isFetching: true,
@@ -24,8 +38,7 @@ export default function auth(state = initialState, action) {
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: true,
-        errorMessage: '',
-        username: action.user.username
+        errorMessage: ''
       });
 
     case 'LOGIN_ERROR':
@@ -38,7 +51,7 @@ export default function auth(state = initialState, action) {
     case 'REQUEST_LOGOUT':
       return Object.assign({}, state, {
         isFetching: true
-      })
+      });
 
     case 'LOGOUT_SUCCESS':
       return Object.assign({}, state, {

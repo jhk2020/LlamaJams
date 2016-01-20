@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Forms from '../components/Forms';
+import Forms from './Forms';
 
 export default class Home extends Component {
   clickHandler(formType) {

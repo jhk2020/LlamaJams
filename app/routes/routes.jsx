@@ -3,15 +3,23 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import Main from '../containers/MainContainer';
 import Auth from '../containers/AuthContainer';
 import Home from '../containers/HomeContainer';
-import Profile from '../containers/ProfileContainer';
+import Playlist from '../components/PlaylistView/Playlist';
 import { syncHistory, routeReducer } from 'redux-simple-router';
+
+function requireAuth(nextState, replace) {
+  if (!localStorage.getItem('token')) {
+    replace({
+      pathname: '/login',
+      state: { nextStatePathname: nextState.location.pathname }
+    })
+  }
+}
 
 const routes = (
   <Router history={browserHistory}>
-    <Route path='/' component={Main}>
-      <IndexRoute component={Home} />
+    <Route path='/' component={Main} >
+      <IndexRoute component={Playlist} onEnter={requireAuth} />
       <Route path='login' component={Auth} />
-      <Route path='profile' component={Profile} />
     </Route>
   </Router>
 )
