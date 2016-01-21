@@ -1,4 +1,4 @@
-export function query (state = '', action) {
+export default function query (state = '', action) {
   switch (action.type) {
     case 'UPDATE_QUERY':
       return action.searchbarQuery;

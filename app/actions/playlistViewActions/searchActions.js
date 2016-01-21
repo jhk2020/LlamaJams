@@ -20,10 +20,44 @@ function updateQueryTracks(results) {
 
 export function fetchSongs(searchbarQuery) {
   return dispatch => {
-    SC.get('/tracks', {q: searchbarQuery},
+    SC.get('/tracks', {
+      q: searchbarQuery,
+      limit: 10,
+      linked_partitioning: 1
+    },
       (results) => {
-        dispatch(updateQueryTracks(results));
+        console.log(results)
+        dispatch(updateQueryTracks(results.collection));
+        if (results.next_href) {
+          dispatch(saveNextPageUrl(results.next_href));
+        } else {
+          dispatch(saveNextPageUrl(''));
+        }
       }
     )
+  }
+}
+
+function saveNextPageUrl(url) {
+  return {
+    type: 'SAVE_NEXT_PAGE_URL',
+    url
+  }
+}
+
+export function fetchMoreSongs(searchbarQuery) {
+  return (dispatch, getState) => {
+    let { queriedTracks } = getState();
+    if (queriedTracks.nextPageUrl) {
+      $.get(queriedTracks.nextPageUrl)
+        .done((results) => {
+          dispatch(updateQueryTracks(results.collection));
+          if (results.next_href) {
+            dispatch(saveNextPageUrl(results.next_href));
+          } else {
+            dispatch(saveNextPageUrl(''));
+          }
+        })
+    }
   }
 }

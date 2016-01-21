@@ -6,22 +6,20 @@ import { fetchSongs, updateQuery, clearQuery } from '../actions/playlistViewActi
 
 function mapStateToProps(state) {
   return {
-    query: state.searchbarQuery
+    searchbarQuery: state.searchbarQuery
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchFromSC: _.debounce(
-      (query) => {
-        dispatch(fetchSongs(query));
-      }, 200
-    ),
-    performQuery: (event) => {
+    fetchFromSC: (searchbarQuery) => {
+      dispatch(fetchSongs(searchbarQuery));
+    },
+    updateQuery: (event) => {
       dispatch(updateQuery(event.target.value));
     },
-    clearSearch: (query) => {
-      dispatch(clearQuery(query));
+    clearSearch: (searchbarQuery) => {
+      dispatch(clearQuery(searchbarQuery));
     }
   }
 }

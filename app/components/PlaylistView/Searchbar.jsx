@@ -2,24 +2,30 @@ import React, { Component } from 'react';
 
 export default class Searchbar extends Component {
   componentWillReceiveProps(nextProps) {
-    this.props.fetchFromSC(nextProps.searchbarQuery);
+    if (nextProps.searchbarQuery === '') {
+      this.props.clearSearch();
+    }
+  }
+
+  submitHandler(e) {
+    e.preventDefault();
+    this.props.fetchFromSC(this.props.searchbarQuery);
   }
 
   render() {
-    const { searchbarQuery, performQuery, clearSearch } = this.props;
+    const { searchbarQuery, updateQuery } = this.props;
     return (
        <div className='searchbar-container'>
          <div className='searchbar'>
-           <form onSubmit={this.handleSubmit}>
+           <form onSubmit={this.submitHandler.bind(this)}>
              <input  name='query'
-                     value={searchbarQuery}
-                     type='text'
-                     placeholder='Search mothafucka'
-                     onChange={(event) => {
-                       performQuery(event);
-                     }}
-                     className='form-control'
-                     autoComplete='false' />
+               value={searchbarQuery}
+               type='text'
+               onChange={(event) => {
+                 updateQuery(event);
+               }}
+               id='searchbar-input'
+               autoComplete='off' />
            </form>
          </div>
        </div>
