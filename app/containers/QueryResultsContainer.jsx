@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { fetchMoreSongs } from '../actions/playlistViewActions/searchActions';
 import { addTrackToPlaylist } from '../actions/playlistViewActions/playlistActions';
-import QueriedTracks from '../components/PlaylistView/QueriedTracks';
+import QueryResults from '../components/PlaylistView/QueryResults';
 
 
 function mapStateToProps(state) {
@@ -25,4 +25,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(QueriedTracks);
+export default connect(mapStateToProps, mapDispatchToProps)(QueryResults);

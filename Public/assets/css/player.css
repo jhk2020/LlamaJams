@@ -232,6 +232,29 @@ input:focus {
   padding: 6px 6px 6px 6px;
 }
 
+
+.now-playing {
+  height: 350px;
+  text-align: center;
+}
+
+.player {
+
+}
+
+.queue-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+}
+
+.queue {
+  height: 50%;
+  width: 65%;
+  margin: auto;
+  overflow-y: auto;
+}
+
 /* soundcloud results is the div element that is rendered underneath the search */
 .soundcloud-results {
   display: none;

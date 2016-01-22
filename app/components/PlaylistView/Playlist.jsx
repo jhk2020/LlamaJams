@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Search from '../../containers/SearchbarContainer';
 import QuerySidebar from './QuerySidebar';
+import Queue from '../../containers/QueueContainer';
+import Player from '../../containers/PlayerContainer';
 
 export default class Playlist extends Component {
   logout() {
@@ -41,7 +43,8 @@ export default class Playlist extends Component {
 
   menuWrap(isOpen) {
     return {
-      position: 'fixed',
+      position: 'relative',
+      float: 'right',
       right: !isOpen ? '-300px' : '0',
       zIndex: 2,
       width: '300px',
@@ -53,8 +56,14 @@ export default class Playlist extends Component {
   render() {
     return (
       <div className='music-page'>
-
         <div className='overlay' onClick={this.toggleNavbar} style={this.overlay(this.state.isOpen)}></div>
+
+        <div className='queue-container'>
+          <div className='now-playing'>
+            <Player className='player'/>
+          </div>
+          <Queue />
+        </div>
 
         <div className='playlistcode-container'>
           <span className='guestcode-span'>
@@ -75,7 +84,6 @@ export default class Playlist extends Component {
         <div className='menu' style={this.menuWrap(this.state.isOpen)}>
           <QuerySidebar />
         </div>
-
       </div>
     );
   }

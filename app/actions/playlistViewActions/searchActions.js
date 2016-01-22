@@ -24,8 +24,8 @@ export function fetchSongs(searchbarQuery) {
       q: searchbarQuery,
       limit: 10,
       linked_partitioning: 1
-    },
-      (results) => {
+    })
+    .then((results) => {
         console.log(results)
         dispatch(updateQueryTracks(results.collection));
         if (results.next_href) {
@@ -33,8 +33,7 @@ export function fetchSongs(searchbarQuery) {
         } else {
           dispatch(saveNextPageUrl(''));
         }
-      }
-    )
+      });
   }
 }
 

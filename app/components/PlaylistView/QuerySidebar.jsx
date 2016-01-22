@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Searchbar from '../../containers/SearchbarContainer';
-import QueriedTracks from '../../containers/QueriedTracksContainer';
+import QueryResults from '../../containers/QueryResultsContainer';
 
 export default class QuerySidebar extends Component {
 
@@ -8,7 +8,7 @@ export default class QuerySidebar extends Component {
     return (
       <div>
         <Searchbar />
-        <QueriedTracks />
+        <QueryResults />
       </div>
     )
   }
