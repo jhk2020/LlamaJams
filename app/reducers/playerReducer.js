@@ -13,7 +13,7 @@ export default function player(state = initialState, action) {
         currentTrack: action.track,
         currentStream: action.stream,
         jukeboxPlaying: true
-      })
+      });
     case 'CONTINUE_PLAYING':
       return Object.assign({}, state, {
         jukeboxPlaying: true
@@ -21,6 +21,11 @@ export default function player(state = initialState, action) {
     case 'PAUSE_PLAYING':
       return Object.assign({}, state, {
         jukeboxPlaying: false
+      });
+    case 'PLAY_NEXT_TRACK':
+      return Object.assign({}, state, {
+        currentStream: null,
+        currentTrack: null
       });
     default:
       return state;

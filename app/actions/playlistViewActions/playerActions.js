@@ -1,22 +1,17 @@
 export function startPlaying() {
   return (dispatch, getState) => {
     const { queue } = getState();
-    const firstTrack = queue.slice().shift();
-    SC.stream('/tracks/' + firstTrack.id)
+    if (queue.length > 0) {
+      const firstTrack = Object.assign({}, queue[0]);
+      SC.stream('/tracks/' + firstTrack.id)
       .then((stream) => {
-      stream.play();
-      dispatch(setCurrentTrack(stream, firstTrack));
+        dispatch(setCurrentTrack(stream, firstTrack));
+        stream.play();
+        stream.on('finish', () => {
+          dispatch(playNextTrack());
+        });
       });
-  }
-}
-
-export function playNextTrack(track) {
-  return (dispatch, getState) => {
-    const { queue } = getState();
-    SC.stream('/tracks/' + track.id, (stream) => {
-      stream.play();
-      dispatch(setCurrentTrack(stream, track));
-    });
+    }
   }
 }
 
@@ -28,15 +23,31 @@ function setCurrentTrack(stream, track) {
   }
 }
 
+function playNextTrack() {
+  return {
+    type: 'PLAY_NEXT_TRACK'
+  }
+}
+
+export function skipSong() {
+  return (dispatch, getState) => {
+    const { queue, currentStream } = getState();
+    if (queue.length === 0) {
+      dispatch(togglePlayButton());
+    }
+    dispatch(playNextTrack());
+  }
+}
+
 export function togglePlayButton() {
   return (dispatch, getState) => {
-    let { jukeboxPlaying, currentTrack, currentStream } = getState().player;
+    let { jukeboxPlaying, currentStream } = getState().player;
     if (!jukeboxPlaying) {
       currentStream.play();
-      dispatch(continuePlaying(currentTrack));
+      dispatch(continuePlaying());
     } else {
       currentStream.pause();
-      dispatch(pausePlaying(currentTrack));
+      dispatch(pausePlaying());
     }
   }
 }
