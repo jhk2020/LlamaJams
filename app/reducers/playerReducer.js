@@ -1,31 +1,29 @@
-const initialState = {
+import { Map } from 'immutable';
+
+const initialState = Map({
   jukeboxPlaying: false,
   trackPosition: null,
   playlistPosition: -1,
   currentStream: null,
   currentTrack: null
-}
+});
 
 export default function player(state = initialState, action) {
   switch(action.type) {
     case 'SET_CURRENT_TRACK':
-      return Object.assign({}, state, {
-        currentTrack: action.track,
-        currentStream: action.stream,
-        jukeboxPlaying: true
+      return state.withMutations(map => {
+        map.set('currentTrack', action.track)
+           .set('currentStream', action.stream)
+           .set('jukeboxPlaying', true);
       });
     case 'CONTINUE_PLAYING':
-      return Object.assign({}, state, {
-        jukeboxPlaying: true
-      });
+      return state.update('jukeboxPlaying', boolean => true);
     case 'PAUSE_PLAYING':
-      return Object.assign({}, state, {
-        jukeboxPlaying: false
-      });
+      return state.update('jukeboxPlaying', boolean => false);
     case 'PLAY_NEXT_TRACK':
-      return Object.assign({}, state, {
-        currentStream: null,
-        currentTrack: null
+      return state.withMutations(map => {
+        map.set('currentStream', null)
+           .set('currentTrack', null);
       });
     default:
       return state;

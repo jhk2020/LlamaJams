@@ -1,9 +1,9 @@
 export function startPlaying() {
   return (dispatch, getState) => {
     const { queue } = getState();
-    if (queue.length > 0) {
-      const firstTrack = Object.assign({}, queue[0]);
-      SC.stream('/tracks/' + firstTrack.id)
+    if (queue.size > 0) {
+      const firstTrack = queue.first();
+      SC.stream('/tracks/' + firstTrack.get('id'))
       .then((stream) => {
         dispatch(setCurrentTrack(stream, firstTrack));
         stream.play();
@@ -31,9 +31,11 @@ function playNextTrack() {
 
 export function skipSong() {
   return (dispatch, getState) => {
-    const { queue, currentStream } = getState();
-    if (queue.length === 0) {
-      dispatch(togglePlayButton());
+    const { queue, player } = getState();
+    if (queue.size === 0) {
+      const currentStream = player.get('currentStream');
+      currentStream.pause();
+      dispatch(pausePlaying());
     }
     dispatch(playNextTrack());
   }
@@ -41,7 +43,8 @@ export function skipSong() {
 
 export function togglePlayButton() {
   return (dispatch, getState) => {
-    let { jukeboxPlaying, currentStream } = getState().player;
+    const jukeboxPlaying = getState().player.get('jukeboxPlaying');
+    const currentStream = getState().player.get('currentStream');
     if (!jukeboxPlaying) {
       currentStream.play();
       dispatch(continuePlaying());

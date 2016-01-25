@@ -18,7 +18,8 @@ function requireAuth(nextState, replace) {
 const routes = (
   <Router history={browserHistory}>
     <Route path='/' component={Main} >
-      <IndexRoute component={Playlist} onEnter={requireAuth} />
+      <IndexRoute component={Home} onEnter={requireAuth} />
+      <Route path='/playlist/:id' component={Playlist} />
       <Route path='login' component={Auth} />
     </Route>
   </Router>

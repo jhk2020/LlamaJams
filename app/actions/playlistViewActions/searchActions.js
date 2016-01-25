@@ -26,7 +26,6 @@ export function fetchSongs(searchbarQuery) {
       linked_partitioning: 1
     })
     .then((results) => {
-        console.log(results)
         dispatch(updateQueryTracks(results.collection));
         if (results.next_href) {
           dispatch(saveNextPageUrl(results.next_href));
@@ -47,8 +46,8 @@ function saveNextPageUrl(url) {
 export function fetchMoreSongs(searchbarQuery) {
   return (dispatch, getState) => {
     let { queriedTracks } = getState();
-    if (queriedTracks.nextPageUrl) {
-      $.get(queriedTracks.nextPageUrl)
+    if (queriedTracks.get('nextPageUrl')) {
+      $.get(queriedTracks.get('nextPageUrl'))
         .done((results) => {
           dispatch(updateQueryTracks(results.collection));
           if (results.next_href) {

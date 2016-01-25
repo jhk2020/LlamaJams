@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 
-const PlaylistTrack = ({ track }) => {
+const PlaylistTrack = ({ track, upVote, downVote }) => {
   return (
     <div clasName='playlist-track'>
-      <img src={track.artwork_url} />
+      <img src={track.get('artwork_url')} />
       <div>
-        {track.title}
+        {track.get('title')}
       </div>
+      <div>{track.get('vote')}</div>
+      <button onClick={() => {upVote(track.get('id'))}}>upVote</button>
+      <button onClick={() => {downVote(track.get('id'))}}>downVote</button>
       <br />
     </div>
   )

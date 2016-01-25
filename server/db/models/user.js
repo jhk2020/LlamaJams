@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var bluebird = require('bluebird');
+bluebird.promisifyAll(mongoose);
 
 var userSchema = new mongoose.Schema({
   userId: mongoose.Schema.Types.ObjectId,

@@ -1,17 +1,17 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-const QueriedTrack = ({ track, addTrackToPlaylist }) => {
+const QueriedTrack = ({ track, addTrackToQueue }) => {
   let picUrl = '';
-  if (track.artwork_url) {
-    picUrl = track.artwork_url.replace(/large/, 't300x300');
+  if (track.get('artwork_url')) {
+    picUrl = track.get('artwork_url').replace(/large/, 't300x300');
   }
   function clickHandler() {
-    addTrackToPlaylist(track);
+    addTrackToQueue(track);
   }
   return (
     <div className='queried-track'>
       <img src={picUrl} className='querysidebar-artwork' />
-      <div className='querysidebar-track-title'>{track.title}</div>
+      <div className='querysidebar-track-title'>{track.get('title')}</div>
       <button onClick={clickHandler}>Add</button>
     </div>
   )

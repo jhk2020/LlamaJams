@@ -1,23 +1,19 @@
-const initialState = {
-  trackResults: [],
+import { List, Map, fromJS } from 'immutable';
+
+const initialState = Map({
+  trackResults: List(),
   nextPageUrl: ''
-}
+});
 
 export default function queriedTracks (state = initialState, action) {
   switch (action.type) {
     case 'UPDATE_QUERY_TRACKS':
-      return Object.assign({}, state, {
-        trackResults: state.trackResults.slice().concat(action.results)
-      });
+      return state.update('trackResults', results => results.concat(fromJS(action.results)));
     case 'CLEAR_QUERY':
-      return Object.assign({}, state, {
-        trackResults: [],
-        nextPageUrl: ''
-      });
+      const tempState = state.update('trackResults', results => List());
+      return tempState.update('nextPageUrl', url => '');
     case 'SAVE_NEXT_PAGE_URL':
-      return Object.assign({}, state, {
-        nextPageUrl: action.url
-      })
+      return state.update('nextPageUrl', oldurl => action.url);
     default:
       return state;
   }

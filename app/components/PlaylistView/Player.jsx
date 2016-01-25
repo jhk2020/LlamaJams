@@ -12,12 +12,12 @@ export default class Player extends Component {
   }
 
   render() {
-    const { jukeboxPlaying, trackPosition, currentTrack, currentStream, actions } = this.props;
+    const { trackPosition, currentTrack, currentStream, actions } = this.props;
     const { startPlaying, skipSong, togglePlayButton } = actions;
     let picUrl = '';
     if (currentTrack) {
-      if (currentTrack.artwork_url) {
-        picUrl = currentTrack.artwork_url.replace(/large/, 't300x300');
+      if (currentTrack.get('artwork_url')) {
+        picUrl = currentTrack.get('artwork_url').replace(/large/, 't300x300');
       }
     }
     return (
@@ -25,8 +25,8 @@ export default class Player extends Component {
         {currentTrack ?
           <div className='current-track'>
             <img src={picUrl} />
-            <div>{currentTrack.title}</div>
-            <div>{currentTrack.user.username}</div>
+            <div>{currentTrack.get('title')}</div>
+            <div>{currentTrack.get('user').username}</div>
           </div>
         : null}
         <button onClick={ currentStream ? togglePlayButton : startPlaying }>play</button>

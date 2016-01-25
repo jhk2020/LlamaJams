@@ -1,24 +1,38 @@
 const BASE_URL = 'http://localhost:5000/api/';
 
-function callApi(endpoint, authenticated) {
+function callApi(endpoint, method, data, queryString, authenticated) {
   let token = localStorage.getItem('token') || null;
   let config = {};
+  let url = '';
 
   if (authenticated) {
     if (token) {
       config = {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: method,
+        body: data ? JSON.stringify({data}) : null
       }
     } else {
       throw 'No token saved!'
     }
   }
 
-  return fetch(BASE_URL + endpoint, config)
+  if (queryString) {
+    url = BASE_URL + endpoint + '?code=' + queryString;
+  } else {
+    url = BASE_URL + endpoint;
+  }
+
+  return fetch(url, config)
     .then(response => {
       return response.json();
     })
     .then(response => {
+      console.log('api: ', response)
       return response;
     })
     .catch(err => console.error(err));
@@ -33,18 +47,18 @@ export default store => next => action => {
     return next(action);
   }
 
-  let { endpoint, types, authenticated } = callAPI;
+  let { endpoint, types, method, data, queryString, authenticated, callback } = callAPI;
 
-  const [ requestType, successType, errorType ] = types;
+  const [ successType, errorType ] = types;
 
-  return callApi(endpoint, authenticated)
+  return callApi(endpoint, method, data, queryString, authenticated)
           .then(response => {
-              next({response, authenticated, type: successType});
-          })
-          .catch(error => {
-            next({
-              error: error.message || 'There was an error.',
-              type: errorType
-            })
+              next({response, type: successType}),
+            error => {
+              next({
+                error: error.message || 'There was an error.',
+                type: errorType
+              })
+            }
           })
 }

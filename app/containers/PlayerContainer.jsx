@@ -6,7 +6,10 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/playlistViewActions/playerActions';
 
 function mapStateToProps(state) {
-  let { jukeboxPlaying, trackPosition, currentTrack, currentStream } = state.player;
+  const jukeboxPlaying = state.player.get('jukeboxPlaying'),
+      trackPosition = state.player.get('trackPosition'),
+      currentTrack = state.player.get('currentTrack'),
+      currentStream = state.player.get('currentStream');
   return {
     jukeboxPlaying,
     trackPosition,

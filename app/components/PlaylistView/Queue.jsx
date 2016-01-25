@@ -1,16 +1,29 @@
 import React, { Component } from 'react';
 import PlaylistTrack from './PlaylistTrack';
 
-const Queue = ({ queue }) => {
-  return (
-    <div className='queue'>
-      {queue.map((track) => (
-        <div key={track.id}>
-          <PlaylistTrack track={track} />
-        </div>
-      ))}
-    </div>
-  )
-}
+export default class Queue extends Component {
+  render() {
+    const { queue, actions } = this.props;
+    console.log(queue)
+    const queueRender = queue.reverse().map(track => (
+      <div key={track.get('id')}>
+        <PlaylistTrack track={track} upVote={actions.upVote} downVote={actions.downVote} />
+      </div>
+    ));
+    return (
+      <div className='queue'>
+        { queue.size > 0 ? queueRender : null }
+      </div>
+    )
+  }
 
-export default Queue;
+  componentDidMount() {
+    const { actions, playlistCode } = this.props;
+      actions.loadPlaylist(playlistCode);
+  }
+
+  componentWillUnmount() {
+    const { actions, playlistCode } = this.props;
+    actions.savePlaylist(playlistCode);
+  }
+}

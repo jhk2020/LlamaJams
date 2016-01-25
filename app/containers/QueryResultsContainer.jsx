@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { fetchMoreSongs } from '../actions/playlistViewActions/searchActions';
-import { addTrackToPlaylist } from '../actions/playlistViewActions/playlistActions';
+import { addTrackToQueue } from '../actions/playlistViewActions/queueActions';
 import QueryResults from '../components/PlaylistView/QueryResults';
 
 
 function mapStateToProps(state) {
   return {
     searchbarQuery: state.searchbarQuery,
-    trackResults: state.queriedTracks.trackResults
+    trackResults: state.queriedTracks.get('trackResults')
   }
 }
 
@@ -18,8 +18,8 @@ function mapDispatchToProps(dispatch) {
     fetchMoreSongs: (searchbarQuery) => {
       dispatch(fetchMoreSongs(searchbarQuery));
     },
-    addTrackToPlaylist: (track) => {
-      dispatch(addTrackToPlaylist(track));
+    addTrackToQueue: (track) => {
+      dispatch(addTrackToQueue(track));
     }
   }
 }
