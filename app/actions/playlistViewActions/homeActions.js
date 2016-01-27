@@ -1,4 +1,4 @@
-import { CALL_API } from '../../middlewares/api';
+import { CALL_API } from '../../middlewares/apiMiddleware';
 
 export function createNewPlaylist(playlistName) {
   return {
@@ -8,17 +8,6 @@ export function createNewPlaylist(playlistName) {
       data: playlistName,
       authenticated: true,
       types: ['CREATE_PLAYLIST_SUCCESS', 'CREATE_PLAYLIST_FAIL']
-    }
-  }
-}
-
-export function fetchPlaylists() {
-  return {
-    [CALL_API]: {
-      endpoint: 'users/playlist',
-      method: 'GET',
-      authenticated: true,
-      types: ['FETCH_PLAYLIST_SUCCESS', 'FETCH_PLAYLIST_FAIL']
     }
   }
 }

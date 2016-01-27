@@ -1,28 +1,42 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var morgan = require('morgan');
-var mongoose = require('mongoose');
-var bluebird = require('bluebird');
+import express from 'express';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import mongoose from 'mongoose';
+import bluebird from 'bluebird';
+import path from 'path';
 bluebird.promisifyAll(mongoose);
 
-var jwt = require('jsonwebtoken');
-// var apiRoutes = require('./routes');
-var config = require('./db/config');
-var User= require('./db/models/user');
-var Playlist = require('./db/models/playlist');
+import jwt from 'jsonwebtoken';
+import config from './db/config';
+import Playlist from './db/models/playlist';
 
-var webpack = require('webpack');
-var webpackDevMiddleware = require('webpack-dev-middleware');
-var webpackHotMiddleware = require('webpack-hot-middleware');
-var webpackConfig = require('../webpack.config.js');
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+import webpackConfig from '../webpack.config.js';
+import PrettyError from 'pretty-error';
 
-var port = process.env.PORT || 5000;
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import createLocation from 'history/lib/createLocation';
+import configStore from '../app/store/configStore';
+import { RouterContext, match } from 'react-router';
+import createHistory from 'history/lib/createMemoryHistory';
+import { Provider } from 'react-redux';
+import getRoutes from '../app/routes/routes';
+import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect';
+
+import SocketIo from 'socket.io';
+import socketEvents from './socketEvents';
+
+const pretty = new PrettyError();
+const port = process.env.PORT || 5000;
 mongoose.connect(config.database);
 mongoose.connection.on('error', function(err) {
   console.error('Connection Error!', err);
 });
 
-var app = express();
+const app = express();
 
 /*-------------------------------- WEBPACK -----------------------------------*/
 
@@ -41,128 +55,42 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(express.static(__dirname + '/../public'));
-
-
-/*--------------------------- UNPROTECTED ROUTES -----------------------------*/
-app.post('/users', function(req, res) {
-  User.findOne({
-    username: req.body.username
-  }, function(err, user) {
-    if (user) {
-      res.status(400).send({error: 'Username already exists.'});
-    } else {
-      var newUser = new User({
-        username: req.body.username,
-        password: req.body.password
-      });
-      newUser.save(function(err) {
-        if (err) {
-          console.error('Error adding new user: ', err);
-          return;
-        }
-        console.log('User saved successfully: ', newUser);
-        var token = jwt.sign({username: newUser.username}, app.get('secret'), {
-                      expiresIn: '1d'
-                    });
-
-        res.status(201).send({
-          message: 'Enjoy your token!',
-          token: token
-        });
-      });
-    }
-  });
-});
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 /*---------------------------- API ROUTES -----------------------------------*/
 
 var apiRoutes = express.Router();
 
-apiRoutes.post('/authenticate', function(req, res) {
-  console.log(req.body)
-  User.findOne({
-    username: req.body.username
-  }, function(err, user) {
-    if (err) {
-      console.error('Error finding user: ', err);
-    }
-    if (!user) {
-      res.status(401).send({error: 'User doesn`t exist.'});
-    } else if (user) {
-      if (user.password !== req.body.password) {
-        res.status(401).send({error: 'Authentication failed. Wrong password.'});
-      } else {
-        var token = jwt.sign({username: user.username}, app.get('secret'), {
-                      expiresIn: '1d'
-                    });
-
-        res.status(201).send({
-          message: 'Enjoy your token!',
-          token: token
-        });
-      }
-    }
-  });
-});
-
-apiRoutes.use(function(req, res, next) {
-  var token = req.body.token || req.query.token || req.headers.authorization.split(' ')[1];
-  if (token) {
-    jwt.verify(token, app.get('secret'), function(err, decoded) {
-      if (err) {
-        return res.status(401).send({error: 'Failed to authentiate token.' });
-      } else {
-        req.decoded = decoded;
-        next();
-      }
-    })
-  } else {
-    return res.status(401).send({
-      success: false,
-      message: 'No token provided.'
-    });
-  }
-});
-
-apiRoutes.get('/users/playlist', function(req, res) {
-  Playlist.find({owner: req.decoded.username}, 'title code', function(err, playlists) {
-    if (err) {
-      console.error('Error fetching playlist: ', err);
-      return;
-    }
-    console.log('Fetching user playlists: ', playlists);
-
-
-    res.status(200).send({
-      message: 'Playlists found!',
-      playlists: playlists
-    })
-  })
-})
-
-apiRoutes.post('/users/playlist', function(req, res) {
+apiRoutes.post('/playlist', function(req, res) {
   var playlistCode = Math.random().toString(36).substr(2,5);
   var newPlaylist = new Playlist({
-    title: req.body.data,
-    code: playlistCode,
-    owner: req.decoded.username
+    title: req.body.playlistName,
+    code: playlistCode
   });
   newPlaylist.save(function(err) {
     if (err) {
-      console.error('Error adding new user: ', err);
+      console.error('Error adding new playlist: ', err);
       return;
     }
     console.log('New playlist saved successfully: ', newPlaylist);
 
+    var token = jwt.sign({
+      playlistName: newPlaylist.title,
+      playlistCode: newPlaylist.code
+    }, app.get('secret'),
+    { expiresIn: '1d' });
+
     res.status(201).send({
       message: 'Playlist saved!',
-      newPlaylist: newPlaylist
+      token: token,
+      playlist: newPlaylist
     });
   });
 });
 
 apiRoutes.get('/playlist', function(req, res) {
-  console.log('body data: ', req.query.code)
+  console.log('body data: ', req.query)
   Playlist.findOneAsync({ code: req.query.code })
     .then(function(playlist) {
       console.log('Found playlist: ', playlist);
@@ -177,7 +105,7 @@ apiRoutes.get('/playlist', function(req, res) {
 });
 
 
-apiRoutes.post('/playlist', function(req, res) {
+apiRoutes.put('/playlist', function(req, res) {
   Playlist.findOneAndUpdateAsync({ code: req.body.data.code }, { queue: req.body.data.queue })
     .then(function(numbersAffected) {
       res.status(201).send({
@@ -192,6 +120,45 @@ apiRoutes.post('/playlist', function(req, res) {
 
 app.use('/api', apiRoutes);
 
-app.listen(port, function() {
-  console.log('Listening to 5000...');
+/*---------------------------- SSR MIDDLEWARE --------------------------------*/
+
+app.use((req, res) => {
+  const history = createHistory();
+  const location = createLocation(req.url);
+  const routes = getRoutes();
+  const store = configStore(history);
+
+
+  match({ history, routes, location }, (error, redirectLocation, renderProps) => {
+    if (redirectLocation) {
+      return res.redirect(redirectLocation.pathname + redirectLocation.search);
+    } else if (error) {
+      console.error('ROUTER ERROR: ', pretty.render(error));
+      return res.status(500).send(error.message);
+    } else if (!renderProps) {
+      return res.status(404).send('Not found.');
+    } else if (renderProps) {
+      loadOnServer(renderProps, store).then(() => {
+        const componentHTML = renderToString(
+          <Provider store={store}>
+            <ReduxAsyncConnect {...renderProps}/>
+          </Provider>
+        );
+
+        const initialState = escape(JSON.stringify(store.getState()));
+
+        res.render('index', { componentHTML, initialState });
+      });
+
+    }
+  });
 });
+
+const PORT = process.env.PORT || 5000;
+
+const server = app.listen(PORT, function() {
+  console.log('LISTENING ON:', PORT);
+});
+
+const io = new SocketIo(server, { path: '/api/queue'})
+const socketEvents = socketEvents(io);

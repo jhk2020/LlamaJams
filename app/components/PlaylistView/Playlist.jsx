@@ -3,8 +3,18 @@ import Search from '../../containers/SearchbarContainer';
 import QuerySidebar from './QuerySidebar';
 import Queue from '../../containers/QueueContainer';
 import Player from '../../containers/PlayerContainer';
+import { loadPlaylist } from '../../actions/playlistViewActions/queueActions';
 
 export default class Playlist extends Component {
+  static reduxAsyncConnect(params, store) {
+    const { dispatch, getState } = store;
+    const { currentPlaylist, queue } = getState();
+    const playlistCode = currentPlaylist.get('code');
+    if (queue.size === 0) {
+      return dispatch(loadPlaylist(playlistCode));
+    }
+  }
+
   logout() {
     localStorage.clear();
     location.reload();

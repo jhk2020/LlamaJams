@@ -4,43 +4,27 @@ export default class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: ''
+      playlistName: ''
     }
   }
 
   handleUsernameChange(e) {
     this.setState({
-      username: e.target.value
-    });
-  }
-
-  handlePasswordChange(e) {
-    this.setState({
-      password: e.target.value
+      playlistName: e.target.value
     });
   }
 
   submitHandler(e) {
     e.preventDefault();
-    if (!this.state.username) {
+    if (!this.state.playlistName) {
       this.setState({
-        username: 'Fill in username!'
-      });
-      return;
-    } else if (!this.state.password) {
-      this.setState({
-        password: 'Fill in password!'
+        playlistName: 'Fill in username!'
       });
       return;
     }
-    this.props.loginUser({
-      username: this.state.username,
-      password: this.state.password
-    });
+    this.props.createNewPlaylist(this.state.playlistName);
     this.setState({
-      username: '',
-      password: ''
+      playlistName: ''
     })
   }
 
@@ -51,18 +35,9 @@ export default class LoginForm extends Component {
           <input
             className='input-host-jam'
             type='text'
-            placeholder='Username'
-            value={this.state.username}
+            placeholder='Name your party...'
+            value={this.state.playlistName}
             onChange={this.handleUsernameChange.bind(this)} />
-          <br />
-          <input
-            className='input-host-jam'
-            type='text'
-            placeholder='Password'
-            value={this.state.password}
-            onChange={this.handlePasswordChange.bind(this)} />
-          <br />
-          <input type='submit' value='Post' />
         </form>
         {this.props.errorMessage ? <p>{this.props.errorMessage}</p> : null}
       </div>

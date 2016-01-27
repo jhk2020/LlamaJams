@@ -28,7 +28,7 @@ export default function queue(state = List(), action) {
       return newQueue.sortBy(track => track.get('vote'));
 
     case 'LOAD_PLAYLIST_SUCCESS':
-      return state.concat(fromJS(action.response.queue));
+      return state.concat(fromJS(action.res.queue));
 
     case 'LOAD_PLAYLIST_FAIL':
       return state;
@@ -38,7 +38,7 @@ export default function queue(state = List(), action) {
 
     case 'SAVE_PLAYLIST_FAIL':
       return state;
-      
+
     default:
       return state;
   }

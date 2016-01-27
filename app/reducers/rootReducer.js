@@ -5,16 +5,19 @@ import searchbarQuery from './searchbarReducer';
 import queriedTracks from './queriedTracksReducer';
 import queue from './queueReducer';
 import player from './playerReducer';
-import home from './homeReducer';
+import currentPlaylist from './currentPlaylistReducer';
+import { reducer as reduxAsyncConnect } from 'redux-async-connect';
+
 
 const rootReducer = combineReducers({
   auth,
-  home,
+  currentPlaylist,
   searchbarQuery,
   queriedTracks,
   queue,
   player,
-  routing: routeReducer
+  routing: routeReducer,
+  reduxAsyncConnect
 });
 
 export default rootReducer;

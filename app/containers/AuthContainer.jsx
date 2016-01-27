@@ -2,21 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Auth from '../components/AuthView/Auth';
-import * as actionCreators from '../actions/authActions';
+import { createNewPlaylist } from '../actions/authActions';
+import { routeActions } from 'redux-simple-router';
 
 function mapStateToProps(state) {
-  const { auth } = state;
+  const { auth, currentPlaylist } = state;
   return {
-    isFetching: auth.isFetching,
-    isAuthenticated: auth.isAuthenticated,
     errorMessage: auth.errorMessage,
-    showForm: auth.showForm
+    currentPlaylist
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(actionCreators, dispatch)
+    createNewPlaylist: (playlistName) => {
+      dispatch(createNewPlaylist(playlistName));
+    },
+    pushState: (route) => {
+      dispatch(routeActions.push(route));
+    }
   }
 }
 

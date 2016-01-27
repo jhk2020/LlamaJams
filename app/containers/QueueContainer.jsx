@@ -7,7 +7,7 @@ import Queue from '../components/PlaylistView/Queue';
 function mapStateToProps(state) {
   return {
     queue: state.queue,
-    playlistCode: state.home.getIn(['currentPlaylist', 'code'])
+    playlistCode: state.currentPlaylist.get('code')
   }
 }
 

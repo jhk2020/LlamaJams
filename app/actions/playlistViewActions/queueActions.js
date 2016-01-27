@@ -1,4 +1,4 @@
-import { CALL_API } from '../../middlewares/api';
+import { CALL_API } from '../../middlewares/apiMiddleware';
 import { toJS } from 'immutable';
 
 export function addTrackToQueue(track) {
@@ -24,13 +24,22 @@ export function downVote(track) {
 
 export function loadPlaylist(code) {
   return {
-    [CALL_API]: {
-      endpoint: 'playlist',
-      method: 'GET',
-      queryString: code,
-      authenticated: true,
-      types: ['LOAD_PLAYLIST_SUCCESS', 'LOAD_PLAYLIST_FAIL']
-    }
+    types: ['LOAD_PLAYLIST', 'LOAD_PLAYLIST_SUCCESS', 'LOAD_PLAYLIST_FAIL'],
+    promise: fetch('http://localhost:5000/api/playlist?code=' + code)
+  }
+}
+
+function loadPlaylistSuccess(res) {
+  return {
+    type: 'LOAD_PLAYLIST_SUCCESS',
+    res
+  }
+}
+
+function loadPlaylistFail(error) {
+  return {
+    type: 'LOAD_PLAYLIST_FAIL',
+    error
   }
 }
 

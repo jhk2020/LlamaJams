@@ -1,36 +1,46 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Forms from './Forms';
+import LoginForm from './LoginForm';
 
 export default class Home extends Component {
-  clickHandler(formType) {
-    const { actions } = this.props;
-    actions.showForm(formType);
+  constructor(props) {
+    super(props);
+    this.state = {
+      showForm: false
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.currentPlaylist.get('_id')) {
+      this.props.pushState(`/playlist/${nextProps.currentPlaylist.get('code')}`);
+    }
+  }
+
+  clickHandler() {
+    this.setState({
+      showForm: true
+    });
   }
 
   render() {
-    const { isFetching, errorMessage, showForm, actions } = this.props;
+    const { errorMessage, showForm, createNewPlaylist } = this.props;
     return (
       <div className='padded-container'>
         <img src='assets/img/llamalogo.png'/>
-        {showForm === '' ?
-          <div>
-            <div className='logo-container'>
-              <button className='button-lets-jam' onClick={this.clickHandler.bind(this, 'login')}>
-                <span className='text-lets-jam'>Log In</span>
+        <div>
+          <div className='logo-container'>
+            { !this.state.showForm ?
+              <button className='button-lets-jam' onClick={this.clickHandler.bind(this)}>
+                <span className='text-lets-jam'>Start a Jam</span>
               </button>
-              <br/>
-              <button className='button-lets-jam' onClick={this.clickHandler.bind(this, 'signup')}>
-                <span className='text-lets-jam'>Sign Up</span>
-              </button>
-            </div>
-            <div className='guest-container'>
-              <form>
-                <input type='text' className='input-join-jam' placeholder='JOIN A JAM' ref='playlistCode' />
-              </form>
-            </div>
+            : <LoginForm createNewPlaylist={createNewPlaylist} /> }
           </div>
-        : <Forms errorMessage={errorMessage} showForm={showForm} actions={actions} /> }
+          <div className='guest-container'>
+            <form>
+              <input type='text' className='input-join-jam' placeholder='JOIN A JAM' ref='playlistCode' />
+            </form>
+          </div>
+        </div>
       </div>
     )
   }

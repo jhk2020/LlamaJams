@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PlaylistTrack from './PlaylistTrack';
 
+
 export default class Queue extends Component {
   render() {
     const { queue, actions } = this.props;
-    console.log(queue)
     const queueRender = queue.reverse().map(track => (
       <div key={track.get('id')}>
         <PlaylistTrack track={track} upVote={actions.upVote} downVote={actions.downVote} />
@@ -15,15 +15,5 @@ export default class Queue extends Component {
         { queue.size > 0 ? queueRender : null }
       </div>
     )
-  }
-
-  componentDidMount() {
-    const { actions, playlistCode } = this.props;
-      actions.loadPlaylist(playlistCode);
-  }
-
-  componentWillUnmount() {
-    const { actions, playlistCode } = this.props;
-    actions.savePlaylist(playlistCode);
   }
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <title>Llama Jams</title>
+  <link rel="stylesheet" href='assets/css/player.css' type='text/css'>
+</head>
+<body>
+  <div id='app'><%- componentHTML %></div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'></script>
+  <script src='bower_components/jquery/dist/jquery.min.js'></script>
+  <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
+  <script>
+    SC.initialize({
+      client_id: 'c72fe66e9c40f3f82aa142fefca520ea'
+    });
+    window.__INITIAL_STATE__ = '<%= initialState %>';
+  </script>
+  <script src='/static/bundle.js'></script>
+</body>
+</html>
