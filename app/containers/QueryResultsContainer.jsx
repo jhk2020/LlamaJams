@@ -9,7 +9,8 @@ import QueryResults from '../components/PlaylistView/QueryResults';
 function mapStateToProps(state) {
   return {
     searchbarQuery: state.searchbarQuery,
-    trackResults: state.queriedTracks.get('trackResults')
+    trackResults: state.queriedTracks.get('trackResults'),
+    playlistCode: state.currentPlaylist.get('code')
   }
 }
 

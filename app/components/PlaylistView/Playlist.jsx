@@ -15,11 +15,6 @@ export default class Playlist extends Component {
     }
   }
 
-  logout() {
-    localStorage.clear();
-    location.reload();
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -28,6 +23,19 @@ export default class Playlist extends Component {
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.menuWrap = this.menuWrap.bind(this);
     this.overlay = this.overlay.bind(this);
+  }
+
+  componentDidMount() {
+    const { currentPlaylist, actions, socket } = this.props;
+    socket.emit('playlist mounted', currentPlaylist.get('code'));
+    socket.on('receive socket', socketId =>
+      actions.receiveSocket(socketId)
+    );
+  }
+
+  logout() {
+    localStorage.clear();
+    location.reload();
   }
 
   toggleNavbar() {
@@ -70,9 +78,9 @@ export default class Playlist extends Component {
 
         <div className='queue-container'>
           <div className='now-playing'>
-            <Player className='player'/>
+            <Player className='player' />
           </div>
-          <Queue />
+          <Queue socket={this.props.socket} />
         </div>
 
         <div className='playlistcode-container'>
@@ -92,7 +100,7 @@ export default class Playlist extends Component {
           null
         }
         <div className='menu' style={this.menuWrap(this.state.isOpen)}>
-          <QuerySidebar />
+          <QuerySidebar socket={this.props.socket} />
         </div>
       </div>
     );

@@ -161,4 +161,4 @@ const server = app.listen(PORT, function() {
 });
 
 const io = new SocketIo(server, { path: '/api/queue'})
-const socketEvents = socketEvents(io);
+const startSocketEvents = socketEvents(io);

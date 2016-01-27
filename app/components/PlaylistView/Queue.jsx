@@ -7,7 +7,7 @@ export default class Queue extends Component {
     const { queue, actions } = this.props;
     const queueRender = queue.reverse().map(track => (
       <div key={track.get('id')}>
-        <PlaylistTrack track={track} upVote={actions.upVote} downVote={actions.downVote} />
+        <PlaylistTrack {...props} track={track} upVote={actions.upVote} downVote={actions.downVote} />
       </div>
     ));
     return (
