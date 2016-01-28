@@ -1,5 +1,4 @@
 import { Map, fromJS } from 'immutable';
-import { UPDATE_LOCATION } from 'redux-simple-router';
 
 const initialState = Map({
   _id: '',

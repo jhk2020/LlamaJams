@@ -3,7 +3,8 @@ import { List, fromJS } from 'immutable';
 export default function queue(state = List(), action) {
   switch(action.type) {
     case 'ADD_TRACK_TO_QUEUE':
-      const track = action.track.withMutations(track => track.set('vote', 0).set('added', state.size));
+    debugger;
+      const track = fromJS(action.track);
       return state.unshift(track).sortBy(track => track.get('vote'));
 
     case 'SET_CURRENT_TRACK':

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import QueriedTrack from './QueriedTrack';
 
-const QueryResults = ({ trackResults, searchbarQuery, playlistCode, fetchMoreSongs, addTrackToQueue }) => {
+const QueryResults = ({ trackResults, searchbarQuery, playlistCode, socket, fetchMoreSongs, addTrackToQueue }) => {
   function scrollHandler() {
     if($('.scrollBox').scrollTop() === $('.scrollBox').prop('scrollHeight') - $('.scrollBox').prop('clientHeight')) {
       fetchMoreSongs(searchbarQuery);
@@ -24,7 +24,7 @@ const QueryResults = ({ trackResults, searchbarQuery, playlistCode, fetchMoreSon
       <div className='track-results'>
         {trackResults.map(track => (
           <div key={track.get('id')}>
-            <QueriedTrack track={track} playlistCode={playlistCode} socket={this.props.socket} addTrackToQueue={addTrackToQueue} />
+            <QueriedTrack track={track} playlistCode={playlistCode} socket={socket} addTrackToQueue={addTrackToQueue} />
           </div>
         ))}
       </div>

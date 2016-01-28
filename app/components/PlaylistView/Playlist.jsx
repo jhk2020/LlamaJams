@@ -3,7 +3,7 @@ import Search from '../../containers/SearchbarContainer';
 import QuerySidebar from './QuerySidebar';
 import Queue from '../../containers/QueueContainer';
 import Player from '../../containers/PlayerContainer';
-import { loadPlaylist } from '../../actions/playlistViewActions/queueActions';
+import { loadPlaylist,  } from '../../actions/playlistViewActions/queueActions';
 
 export default class Playlist extends Component {
   static reduxAsyncConnect(params, store) {
@@ -20,16 +20,22 @@ export default class Playlist extends Component {
     this.state = {
       isOpen: false
     }
-    this.toggleNavbar = this.toggleNavbar.bind(this);
-    this.menuWrap = this.menuWrap.bind(this);
-    this.overlay = this.overlay.bind(this);
   }
 
   componentDidMount() {
-    const { currentPlaylist, actions, socket } = this.props;
+    const { currentPlaylist, socket, receiveSocket, addTrackToQueue, upVote, downVote } = this.props;
     socket.emit('playlist mounted', currentPlaylist.get('code'));
     socket.on('receive socket', socketId =>
-      actions.receiveSocket(socketId)
+      receiveSocket(socketId)
+    );
+    socket.on('track added', track =>
+      addTrackToQueue(track)
+    );
+    socket.on('track upvoted', track =>
+      upVote(track)
+    );
+    socket.on('track downvoted', track =>
+      downVote(track)
     );
   }
 
@@ -38,15 +44,15 @@ export default class Playlist extends Component {
     location.reload();
   }
 
-  toggleNavbar() {
+  toggleNavbar = () => {
     this.setState({ isOpen: !this.state.isOpen }, () => {
       if (this.state.isOpen) {
         $('#searchbar-input').focus();
       }
     });
-  }
+  };
 
-  overlay(isOpen) {
+  overlay = (isOpen) => {
     return {
       position: 'fixed',
       zIndex: 1,
@@ -57,9 +63,9 @@ export default class Playlist extends Component {
       transform: isOpen ? 'translate3d(0, 0, 0)' : 'translate3d(-100%, 0, 0)',
       transition: isOpen ? 'opacity 0.3s' : 'opacity 0.3s, transform 0s 0.3s'
     }
-  }
+  };
 
-  menuWrap(isOpen) {
+  menuWrap = (isOpen) => {
     return {
       position: 'relative',
       float: 'right',
@@ -69,7 +75,7 @@ export default class Playlist extends Component {
       height: '100%',
       transition: 'all 0.5s'
     };
-  }
+  };
 
   render() {
     return (

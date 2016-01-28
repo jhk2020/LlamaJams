@@ -6,15 +6,16 @@ const QueriedTrack = ({ track, playlistCode, socket, addTrackToQueue }) => {
     picUrl = track.get('artwork_url').replace(/large/, 't300x300');
   }
   function clickHandler() {
-    const { socket } = this.props;
     const newTrack = {
+      id: track.get('id'),
       title: track.get('title'),
-      user: track.user.username,
+      user: track.getIn(['user', 'username']),
+      artwork_url: track.get('artwork_url'),
       playlistCode,
-      picUrl
+      vote: 0
     };
-    socket.emit('add track', track);
-    addTrackToQueue(track);
+    socket.emit('add track', newTrack);
+    addTrackToQueue(newTrack);
   }
   return (
     <div className='queried-track'>

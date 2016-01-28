@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Playlist from '../components/PlaylistView/Playlist';
-import * as actionCreators from '../actions/playlistViewActions/currentPlaylistActions';
+import { receiveSocket } from '../actions/playlistViewActions/currentPlaylistActions';
+import { addTrackToQueue } from '../actions/playlistViewActions/querybarActions';
+import { upVote, downVote } from '../actions/playlistViewActions/queueActions';
 import io from 'socket.io-client';
 
 const socket = io('', { path: '/api/queue'});
@@ -16,7 +18,18 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(actionCreators, dispatch)
+    receiveSocket: (socketId) => {
+      dispatch(receiveSocket(socketId));
+    },
+    addTrackToQueue: (track) => {
+      dispatch(addTrackToQueue(track));
+    },
+    upVote: (track) => {
+      dispatch(upVote(track));
+    },
+    downVote: (track) => {
+      dispatch(downVote(track));
+    }
   }
 }
 

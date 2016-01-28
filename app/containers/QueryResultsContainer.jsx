@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { fetchMoreSongs } from '../actions/playlistViewActions/searchActions';
-import { addTrackToQueue } from '../actions/playlistViewActions/queueActions';
+import { addTrackToQueue } from '../actions/playlistViewActions/querybarActions';
 import QueryResults from '../components/PlaylistView/QueryResults';
 
 
