@@ -3,17 +3,20 @@ import Search from '../../containers/SearchbarContainer';
 import QuerySidebar from './QuerySidebar';
 import Queue from '../../containers/QueueContainer';
 import Player from '../../containers/PlayerContainer';
-import { loadPlaylist,  } from '../../actions/playlistViewActions/queueActions';
+import { loadPlaylist  } from '../../actions/playlistViewActions/currentPlaylistActions';
+import { routeActions } from 'redux-simple-router';
 
 export default class Playlist extends Component {
-  static reduxAsyncConnect(params, store) {
-    const { dispatch, getState } = store;
-    const { currentPlaylist, queue } = getState();
-    const playlistCode = currentPlaylist.get('code');
-    if (queue.size === 0) {
-      return dispatch(loadPlaylist(playlistCode));
-    }
-  }
+  // static reduxAsyncConnect(params, store) {
+  //   debugger;
+  //   const { dispatch, getState } = store;
+  //   const { currentPlaylist, queue } = getState();
+  //   const playlistCode = currentPlaylist.get('code');
+  //   const
+  //   if (queue.size === 0) {
+  //     return dispatch(loadPlaylist(playlistCode));
+  //   }
+  // }
 
   constructor(props) {
     super(props);
@@ -25,18 +28,22 @@ export default class Playlist extends Component {
   componentDidMount() {
     const { currentPlaylist, socket, receiveSocket, addTrackToQueue, upVote, downVote } = this.props;
     socket.emit('playlist mounted', currentPlaylist.get('code'));
-    socket.on('receive socket', socketId =>
+    socket.on('receive socket', socketId => {
+      console.log("socket received");
       receiveSocket(socketId)
-    );
-    socket.on('track added', track =>
+    });
+    socket.on('track added', track => {
+    console.log('client socket track added')
       addTrackToQueue(track)
+    });
+    socket.on('track upvoted', track => {
+    console.log('client socket track upvoted')
+      upVote(track)}
     );
-    socket.on('track upvoted', track =>
-      upVote(track)
-    );
-    socket.on('track downvoted', track =>
+    socket.on('track downvoted', track => {
+    console.log('client socket track downvoted')
       downVote(track)
-    );
+    });
   }
 
   logout() {

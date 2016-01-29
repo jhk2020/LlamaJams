@@ -11,10 +11,3 @@ export function downVote(track) {
     track
   }
 }
-
-export function loadPlaylist(code) {
-  return {
-    types: ['LOAD_PLAYLIST', 'LOAD_PLAYLIST_SUCCESS', 'LOAD_PLAYLIST_FAIL'],
-    promise: fetch('http://localhost:5000/api/playlist?code=' + code)
-  }
-}

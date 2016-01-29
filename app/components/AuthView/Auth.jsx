@@ -6,21 +6,35 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showForm: false
+      showForm: false,
+      playlistCode: ''
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.currentPlaylist.get('_id')) {
+    if (nextProps.currentPlaylist.get('code')) {
       this.props.pushState(`/playlist/${nextProps.currentPlaylist.get('code')}`);
     }
   }
 
-  clickHandler() {
+  clickHandler = () => {
     this.setState({
       showForm: true
     });
-  }
+  };
+
+  goToPlaylist = (e) => {
+    e.preventDefault();
+    if (this.state.playlistCode !== '') {
+      this.props.loadPlaylist(this.state.playlistCode);
+    }
+  };
+
+  handleCodeChange = (e) => {
+    this.setState({
+      playlistCode: e.target.value
+    });
+  };
 
   render() {
     const { errorMessage, showForm, createNewPlaylist } = this.props;
@@ -30,14 +44,18 @@ export default class Home extends Component {
         <div>
           <div className='logo-container'>
             { !this.state.showForm ?
-              <button className='button-lets-jam' onClick={this.clickHandler.bind(this)}>
+              <button className='button-lets-jam' onClick={this.clickHandler}>
                 <span className='text-lets-jam'>Start a Jam</span>
               </button>
             : <LoginForm createNewPlaylist={createNewPlaylist} /> }
           </div>
           <div className='guest-container'>
-            <form>
-              <input type='text' className='input-join-jam' placeholder='JOIN A JAM' ref='playlistCode' />
+            <form onSubmit={this.goToPlaylist}>
+              <input type='text'
+                     className='input-join-jam'
+                     placeholder='JOIN A JAM'
+                     onChange={this.handleCodeChange}
+                     value={this.state.playlistCode} />
             </form>
           </div>
         </div>

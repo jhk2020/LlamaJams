@@ -15,7 +15,7 @@ if(window.__INITIAL_STATE__) {
   }
 }
 
-const arr = ['searchbarQuery', 'currentPlayist', 'queriedTracks', 'queue', 'player'];
+const arr = ['searchbarQuery', 'currentPlaylist', 'queriedTracks', 'queue', 'player'];
 
 Object.keys(initialState).forEach(key => {
   if (arr.indexOf(key) !== -1) {

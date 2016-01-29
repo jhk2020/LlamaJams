@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-const QueriedTrack = ({ track, playlistCode, socket, addTrackToQueue }) => {
+const QueriedTrack = ({ track, playlistCode, socket, addTrackToQueueAsync }) => {
   let picUrl = '';
   if (track.get('artwork_url')) {
     picUrl = track.get('artwork_url').replace(/large/, 't300x300');
@@ -14,8 +14,9 @@ const QueriedTrack = ({ track, playlistCode, socket, addTrackToQueue }) => {
       playlistCode,
       vote: 0
     };
+    
     socket.emit('add track', newTrack);
-    addTrackToQueue(newTrack);
+    addTrackToQueueAsync(newTrack, playlistCode);
   }
   return (
     <div className='queried-track'>

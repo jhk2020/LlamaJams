@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Auth from '../components/AuthView/Auth';
 import { createNewPlaylist } from '../actions/authActions';
+import { setCurrentPlaylistCode, loadPlaylist } from '../actions/playlistViewActions/currentPlaylistActions';
 import { routeActions } from 'redux-simple-router';
 
 function mapStateToProps(state) {
@@ -17,6 +18,12 @@ function mapDispatchToProps(dispatch) {
   return {
     createNewPlaylist: (playlistName) => {
       dispatch(createNewPlaylist(playlistName));
+    },
+    setCurrentPlaylistCode: (code) => {
+      dispatch(setCurrentPlaylistCode(code));
+    },
+    loadPlaylist: (code) => {
+      dispatch(loadPlaylist(code));
     },
     pushState: (route) => {
       dispatch(routeActions.push(route));

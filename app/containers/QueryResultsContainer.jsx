@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { fetchMoreSongs } from '../actions/playlistViewActions/searchActions';
-import { addTrackToQueue } from '../actions/playlistViewActions/querybarActions';
+import { addTrackToQueueAsync } from '../actions/playlistViewActions/querybarActions';
 import QueryResults from '../components/PlaylistView/QueryResults';
 
 
@@ -19,8 +19,8 @@ function mapDispatchToProps(dispatch) {
     fetchMoreSongs: (searchbarQuery) => {
       dispatch(fetchMoreSongs(searchbarQuery));
     },
-    addTrackToQueue: (track) => {
-      dispatch(addTrackToQueue(track));
+    addTrackToQueueAsync: (track, playlistCode) => {
+      dispatch(addTrackToQueueAsync(track, playlistCode));
     }
   }
 }

@@ -8,7 +8,7 @@ export default class LoginForm extends Component {
     }
   }
 
-  handleUsernameChange(e) {
+  handlePlaylistChange(e) {
     this.setState({
       playlistName: e.target.value
     });
@@ -37,7 +37,7 @@ export default class LoginForm extends Component {
             type='text'
             placeholder='Name your party...'
             value={this.state.playlistName}
-            onChange={this.handleUsernameChange.bind(this)} />
+            onChange={this.handlePlaylistChange.bind(this)} />
         </form>
         {this.props.errorMessage ? <p>{this.props.errorMessage}</p> : null}
       </div>

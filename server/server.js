@@ -68,54 +68,60 @@ apiRoutes.post('/playlist', function(req, res) {
     title: req.body.playlistName,
     code: playlistCode
   });
-  newPlaylist.save(function(err) {
-    if (err) {
-      console.error('Error adding new playlist: ', err);
-      return;
-    }
-    console.log('New playlist saved successfully: ', newPlaylist);
+  newPlaylist.saveAsync()
+    .then(function() {
+      console.log('New playlist saved successfully: ', newPlaylist);
 
-    var token = jwt.sign({
-      playlistName: newPlaylist.title,
-      playlistCode: newPlaylist.code
-    }, app.get('secret'),
-    { expiresIn: '1d' });
+      var token = jwt.sign({
+        playlistName: newPlaylist.title,
+        playlistCode: newPlaylist.code
+      }, app.get('secret'),
+      { expiresIn: '1d' });
 
-    res.status(201).send({
-      message: 'Playlist saved!',
-      token: token,
-      playlist: newPlaylist
+      res.status(201).send({
+        message: 'Playlist saved!',
+        token: token,
+        playlist: newPlaylist
+      });
+    })
+    .catch(function(err) {
+      if (err) {
+        console.error('Error adding new playlist: ', err);
+        res.status(400).send({ error: 'Error adding new playlist' });
+      }
     });
-  });
 });
 
-apiRoutes.get('/playlist', function(req, res) {
-  console.log('body data: ', req.query)
-  Playlist.findOneAsync({ code: req.query.code })
+apiRoutes.get('/playlist/:id', function(req, res) {
+  Playlist.findOneAsync({ code: req.params.id })
     .then(function(playlist) {
+      if (!playlist) {
+        console.error('No playlist found: ', err);
+        res.status(500).send({ error: 'Playlist not found' });
+        return;
+      }
       console.log('Found playlist: ', playlist);
       res.status(200).send({
         message: 'Playlist found!',
-        queue: playlist.queue
+        playlist: playlist
       })
     })
     .catch(function(err) {
       console.error('Error finding playlist: ', err);
-    })
+      res.status(500).send({ error: 'Error finding playlist' });
+    });
 });
 
-
-apiRoutes.put('/playlist', function(req, res) {
-  Playlist.findOneAndUpdateAsync({ code: req.body.data.code }, { queue: req.body.data.queue })
-    .then(function(numbersAffected) {
-      res.status(201).send({
-        message: 'Playlist saved!'
-      })
+apiRoutes.post('/playlist/:id', function(req, res) {
+  console.log(req.body)
+  Playlist.findOneAndUpdateAsync({ code: req.params.id }, { $push: {queue: req.body.track} })
+    .then(function() {
+      res.status(201).send({ message: 'Playlist saved!' });
     })
     .catch(function(err) {
       console.error('Error saving playlist: ', err);
       res.status(400).send({error: 'Playlist not saved'})
-    })
+    });
 });
 
 app.use('/api', apiRoutes);
@@ -144,7 +150,6 @@ app.use((req, res) => {
             <ReduxAsyncConnect {...renderProps}/>
           </Provider>
         );
-
         const initialState = escape(JSON.stringify(store.getState()));
 
         res.render('index', { componentHTML, initialState });
@@ -160,5 +165,5 @@ const server = app.listen(PORT, function() {
   console.log('LISTENING ON:', PORT);
 });
 
-const io = new SocketIo(server, { path: '/api/queue'})
+const io = new SocketIo(server, { path: '/api/queue'});
 const startSocketEvents = socketEvents(io);

@@ -3,7 +3,6 @@ import Searchbar from '../../containers/SearchbarContainer';
 import QueryResults from '../../containers/QueryResultsContainer';
 
 export default class QuerySidebar extends Component {
-  debugger;
   render() {
     return (
       <div>

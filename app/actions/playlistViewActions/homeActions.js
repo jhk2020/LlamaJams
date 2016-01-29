@@ -7,7 +7,7 @@ export function createNewPlaylist(playlistName) {
       method: 'POST',
       data: playlistName,
       authenticated: true,
-      types: ['CREATE_PLAYLIST_SUCCESS', 'CREATE_PLAYLIST_FAIL']
+      types: ['SET_CURRENT_PLAYLIST_SUCCESS', 'SET_CURRENT_PLAYLIST_FAIL']
     }
   }
 }

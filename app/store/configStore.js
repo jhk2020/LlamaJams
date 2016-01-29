@@ -14,6 +14,6 @@ export default function configStore(history, initialState) {
   const store = createStoreWithMiddleware(rootReducer, initialState);
 
   reduxRouterMiddleware.listenForReplays(store);
-
+  console.log(store.getState())
   return store;
 }
