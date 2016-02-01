@@ -1,23 +1,51 @@
+import Playlist from './db/models/playlist';
+
 export default function configEvents (io) {
   io.on('connection', socket => {
-    console.log('SOCKET CONNECTION FORMED')
+
     socket.on('playlist mounted', playlistCode => {
-      console.log('playlist mounted', playlistCode, socket.rooms);
       socket.join(playlistCode);
       io.to(playlistCode).emit('receive socket', socket.id);
-      console.log('playlist mounted', playlistCode, socket.rooms);
     })
+
     socket.on('add track', track => {
-      console.log('track added in socket', track.playlistCode)
-      io.to(track.playlistCode).emit('track added', track);
+      Playlist.findOneAsync({ code: track.playlistCode })
+        .then(function(playlist) {
+          const added = playlist.queue.addToSet(track);
+          playlist.saveAsync()
+          .then(() => io.to(track.playlistCode).emit('track added', added[0]))
+          .catch(err => console.error('error', err));
+        })
+        .catch(function(err) {
+          console.error('Error saving playlist: ', err);
+          throw err;
+        });
     })
+
     socket.on('upvote track', track => {
-      console.log('track upvoted in socket', track.playlistCode)
-      io.to(track.playlistCode).emit('track upvoted', track.trackId);
+      Playlist.findOneAsync({ code: track.playlistCode })
+        .then(playlist => {
+          let song = playlist.queue.id(track.id);
+          song.vote++;
+          playlist.saveAsync()
+            .then(() => io.to(track.playlistCode).emit('track upvoted', track.id))
+            .catch(err => console.error('error', err));
+        })
+        .catch(err => console.error('error', err));
     })
+
     socket.on('downvote track', track => {
-      console.log('track downvoted in socket')
-      io.to(track.playlistCode).emit('track downoted', track.trackId);
+      Playlist.findOneAsync({ code: track.playlistCode })
+        .then(playlist => {
+          let song = playlist.queue.id(track.id);
+          song.vote--;
+          playlist.saveAsync()
+            .then(() => io.to(track.playlistCode).emit('track downvoted', track.id))
+            .catch(err => console.error('error', err));
+        })
+        .catch(err => console.error('error', err));
+
     })
+
   });
 }

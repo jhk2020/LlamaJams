@@ -4,13 +4,7 @@ export default function queue(state = List(), action) {
   switch(action.type) {
     case 'ADD_TRACK_TO_QUEUE':
       const track = fromJS(action.track);
-      return state.unshift(track).sortBy(track => track.get('vote'));
-
-    case 'ADD_TRACK_TO_QUEUE_IN_DB_SUCCESS':
-      return state;
-
-    case 'ADD_TRACK_TO_QUEUE_IN_DB_FAIL':
-      return state;
+      return state.push(track);
 
     case 'SET_CURRENT_TRACK':
       if (state.size === 1) {
@@ -20,29 +14,27 @@ export default function queue(state = List(), action) {
 
     case 'UPVOTE_TRACK':
       const updatedQueue = state.updateIn(
-        [state.findIndex(track => track.get('id') === action.track), 'vote'],
+        [state.findIndex(track => track.get('_id') === action.trackId), 'vote'],
         vote => vote + 1
       );
-      return updatedQueue.sortBy(track => track.get('vote'));
+      return updatedQueue.sortBy(track => track.get('vote'), (a, b) => b - a);
 
     case 'DOWNVOTE_TRACK':
-      const index = state.findIndex(track => track.get('id') === action.track);
-      let newQueue = state.updateIn([index, 'vote'], vote => vote - 1);
+      const index = state.findIndex(track => track.get('_id') === action.trackId);
+      let newQueue = state.updateIn(
+        [index, 'vote'],
+        vote => vote - 1
+      );
       if (state.getIn([index, 'vote']) <= -2) {
         newQueue = state.delete(index);
       }
-      return newQueue.sortBy(track => track.get('vote'));
+      return newQueue.sortBy(track => track.get('vote'), (a, b) => b - a);
 
     case 'LOAD_PLAYLIST_SUCCESS':
-      return state.concat(fromJS(action.res.playlist.queue)).reverse();
+      const loadedQueue = action.res.playlist.queue.sort((a, b) => b.vote - a.vote);
+      return state.concat(fromJS(loadedQueue));
 
     case 'LOAD_PLAYLIST_FAIL':
-      return state;
-
-    case 'SAVE_PLAYLIST_SUCCESS':
-      return state;
-
-    case 'SAVE_PLAYLIST_FAIL':
       return state;
 
     default:

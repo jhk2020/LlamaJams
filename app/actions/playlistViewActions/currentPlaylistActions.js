@@ -7,13 +7,6 @@ export function loadPlaylist(code) {
   }
 }
 
-function handleErrors(response) {
-  if(!response.ok) {
-    throw Error(response.error);
-  }
-  return response;
-}
-
 export function setCurrentPlaylistCode(playlistCode) {
   return {
     type: 'SET_CURRENT_PLAYLIST_CODE',

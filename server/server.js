@@ -33,7 +33,7 @@ const pretty = new PrettyError();
 const port = process.env.PORT || 5000;
 mongoose.connect(config.database);
 mongoose.connection.on('error', function(err) {
-  console.error('Connection Error!', err);
+  console.error('Connection Error!', pretty.render(err));
 });
 
 const app = express();
@@ -86,7 +86,7 @@ apiRoutes.post('/playlist', function(req, res) {
     })
     .catch(function(err) {
       if (err) {
-        console.error('Error adding new playlist: ', err);
+        console.error('Error adding new playlist: ', pretty.render(err));
         res.status(400).send({ error: 'Error adding new playlist' });
       }
     });
@@ -96,7 +96,7 @@ apiRoutes.get('/playlist/:id', function(req, res) {
   Playlist.findOneAsync({ code: req.params.id })
     .then(function(playlist) {
       if (!playlist) {
-        console.error('No playlist found: ', err);
+        console.error('No playlist found: ', pretty.render(err));
         res.status(500).send({ error: 'Playlist not found' });
         return;
       }
@@ -107,20 +107,8 @@ apiRoutes.get('/playlist/:id', function(req, res) {
       })
     })
     .catch(function(err) {
-      console.error('Error finding playlist: ', err);
+      console.error('Error finding playlist: ', pretty.render(err));
       res.status(500).send({ error: 'Error finding playlist' });
-    });
-});
-
-apiRoutes.post('/playlist/:id', function(req, res) {
-  console.log(req.body)
-  Playlist.findOneAndUpdateAsync({ code: req.params.id }, { $push: {queue: req.body.track} })
-    .then(function() {
-      res.status(201).send({ message: 'Playlist saved!' });
-    })
-    .catch(function(err) {
-      console.error('Error saving playlist: ', err);
-      res.status(400).send({error: 'Playlist not saved'})
     });
 });
 

@@ -29,20 +29,16 @@ export default class Playlist extends Component {
     const { currentPlaylist, socket, receiveSocket, addTrackToQueue, upVote, downVote } = this.props;
     socket.emit('playlist mounted', currentPlaylist.get('code'));
     socket.on('receive socket', socketId => {
-      console.log("socket received");
       receiveSocket(socketId)
     });
     socket.on('track added', track => {
-    console.log('client socket track added')
       addTrackToQueue(track)
     });
-    socket.on('track upvoted', track => {
-    console.log('client socket track upvoted')
-      upVote(track)}
+    socket.on('track upvoted', trackId => {
+      upVote(trackId)}
     );
-    socket.on('track downvoted', track => {
-    console.log('client socket track downvoted')
-      downVote(track)
+    socket.on('track downvoted', trackId => {
+      downVote(trackId)
     });
   }
 

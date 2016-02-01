@@ -3,7 +3,7 @@ export function startPlaying() {
     const { queue } = getState();
     if (queue.size > 0) {
       const firstTrack = queue.first();
-      SC.stream('/tracks/' + firstTrack.get('id'))
+      SC.stream('/tracks/' + firstTrack.get('soundCloudId'))
       .then((stream) => {
         dispatch(setCurrentTrack(stream, firstTrack));
         stream.play();

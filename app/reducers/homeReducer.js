@@ -2,7 +2,7 @@ const initialState = {
   errorMessage: ''
 }
 
-export default function auth(state = initialState, action) {
+export default function home(state = initialState, action) {
   switch (action.type) {
     case 'CREATE_PLAYLIST_SUCCESS':
       return Object.assign({}, state, {
