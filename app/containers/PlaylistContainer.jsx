@@ -5,6 +5,7 @@ import Playlist from '../components/PlaylistView/Playlist';
 import { receiveSocket } from '../actions/playlistViewActions/currentPlaylistActions';
 import { addTrackToQueue } from '../actions/playlistViewActions/querybarActions';
 import { upVote, downVote } from '../actions/playlistViewActions/queueActions';
+import { routeActions } from 'redux-simple-router';
 import io from 'socket.io-client';
 
 const socket = io('', { path: '/api/queue'});
@@ -29,6 +30,9 @@ function mapDispatchToProps(dispatch) {
     },
     downVote: (track) => {
       dispatch(downVote(track));
+    },
+    leavePlaylist: () => {
+      dispatch(routeActions.push('/'))
     }
   }
 }

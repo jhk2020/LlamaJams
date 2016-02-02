@@ -14,7 +14,8 @@ function mapStateToProps(state) {
     jukeboxPlaying,
     trackPosition,
     currentTrack,
-    currentStream
+    currentStream,
+    isOwner: state.currentPlaylist.get('isOwner')
   }
 }
 

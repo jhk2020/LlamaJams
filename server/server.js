@@ -6,7 +6,6 @@ import bluebird from 'bluebird';
 import path from 'path';
 bluebird.promisifyAll(mongoose);
 
-import jwt from 'jsonwebtoken';
 import config from './db/config';
 import Playlist from './db/models/playlist';
 
@@ -30,6 +29,7 @@ import SocketIo from 'socket.io';
 import socketEvents from './socketEvents';
 
 const pretty = new PrettyError();
+
 const port = process.env.PORT || 5000;
 mongoose.connect(config.database);
 mongoose.connection.on('error', function(err) {
@@ -71,16 +71,8 @@ apiRoutes.post('/playlist', function(req, res) {
   newPlaylist.saveAsync()
     .then(function() {
       console.log('New playlist saved successfully: ', newPlaylist);
-
-      var token = jwt.sign({
-        playlistName: newPlaylist.title,
-        playlistCode: newPlaylist.code
-      }, app.get('secret'),
-      { expiresIn: '1d' });
-
       res.status(201).send({
         message: 'Playlist saved!',
-        token: token,
         playlist: newPlaylist
       });
     })

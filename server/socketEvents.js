@@ -8,6 +8,10 @@ export default function configEvents (io) {
       io.to(playlistCode).emit('receive socket', socket.id);
     })
 
+    socket.on('leave playlist', playlistCode => {
+      socket.leave(playlistCode);
+    })
+
     socket.on('add track', track => {
       Playlist.findOneAsync({ code: track.playlistCode })
         .then(function(playlist) {

@@ -4,20 +4,8 @@ import QuerySidebar from './QuerySidebar';
 import Queue from '../../containers/QueueContainer';
 import Player from '../../containers/PlayerContainer';
 import { loadPlaylist  } from '../../actions/playlistViewActions/currentPlaylistActions';
-import { routeActions } from 'redux-simple-router';
 
 export default class Playlist extends Component {
-  // static reduxAsyncConnect(params, store) {
-  //   debugger;
-  //   const { dispatch, getState } = store;
-  //   const { currentPlaylist, queue } = getState();
-  //   const playlistCode = currentPlaylist.get('code');
-  //   const
-  //   if (queue.size === 0) {
-  //     return dispatch(loadPlaylist(playlistCode));
-  //   }
-  // }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -42,9 +30,9 @@ export default class Playlist extends Component {
     });
   }
 
-  logout() {
-    localStorage.clear();
-    location.reload();
+  leavePlaylist() {
+    socket.emit('leave playlist');
+    this.props.leavePlaylist();
   }
 
   toggleNavbar = () => {
@@ -85,6 +73,15 @@ export default class Playlist extends Component {
       <div className='music-page'>
         <div className='overlay' onClick={this.toggleNavbar} style={this.overlay(this.state.isOpen)}></div>
 
+        <div className='playlistcode-container'>
+          <span className='guestcode-span'>
+            GuestCode: {this.props.currentPlaylist.get('code')}
+          </span>
+          <button onClick={this.leavePlaylist} className='leavePlaylist-button'>
+            LEAVE PLAYLIST
+          </button>
+        </div>
+
         <div className='queue-container'>
           <div className='now-playing'>
             <Player className='player' />
@@ -92,14 +89,6 @@ export default class Playlist extends Component {
           <Queue socket={this.props.socket} />
         </div>
 
-        <div className='playlistcode-container'>
-          <span className='guestcode-span'>
-            GuestCode: {this.props.playlistCode}
-          </span>
-          <button onClick={this.logout} className='logout-button'>
-            LEAVE PLAYLIST
-          </button>
-        </div>
         {
           !this.state.isOpen ?
           <div className='menu-icon-container'>

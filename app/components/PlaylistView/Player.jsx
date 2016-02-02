@@ -12,7 +12,7 @@ export default class Player extends Component {
   }
 
   render() {
-    const { trackPosition, currentTrack, currentStream, actions } = this.props;
+    const { trackPosition, currentTrack, currentStream, isOwner, actions } = this.props;
     const { startPlaying, skipSong, togglePlayButton } = actions;
     let picUrl = '';
     if (currentTrack) {
@@ -29,8 +29,14 @@ export default class Player extends Component {
             <div>{currentTrack.get('user').username}</div>
           </div>
         : null}
-        <button onClick={ currentStream ? togglePlayButton : startPlaying }>play</button>
-        <button onClick={ skipSong }>skip</button>
+
+        {isOwner ?
+          <div>
+            <button onClick={ currentStream ? togglePlayButton : startPlaying }>play</button>
+            <button onClick={ skipSong }>skip</button>
+          </div>
+        : null}
+
       </div>
     )
   }
