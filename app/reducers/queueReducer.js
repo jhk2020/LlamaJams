@@ -7,7 +7,7 @@ export default function queue(state = List(), action) {
       return state.push(track);
 
     case 'SET_CURRENT_TRACK':
-      if (state.size === 1) {
+      if (state.size === 1 || 0) {
         return List();
       }
       return state.slice(1);

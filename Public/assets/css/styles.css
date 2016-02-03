@@ -100,8 +100,17 @@ input[type=text]:focus {
       MOBILE: PLAYER
    ===================== */
 
+#image-placeholder {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+#image-placeholder img {
+  width: 100%;
+}
+
 #now-playing {
-  min-width: 326px;
   max-width: 400px;
   width: 100%;
   position: relative;
@@ -200,13 +209,14 @@ input[type=text]:focus {
 
 
 /* =====================
-      MOBILE: QUEUE
+      MOBILE: SEARCH
    ===================== */
 
 .searchbar-container {
-  padding: 15px 0;
+  padding-bottom: 15px;
   position: fixed;
-  width: 90%;
+  width: 100%;
+  z-index: 1;
 }
 
 .searchbar {
@@ -226,6 +236,33 @@ input[type=text]:focus {
   padding: 6px 6px 6px 6px;
 }
 
+.queried-track-container {
+  margin-bottom: 25px;
+}
+
+.queried-track {
+  position: relative;
+}
+
+.queried-track-title {
+  color: white;
+  text-align: left;
+  margin: 0 5%;
+}
+
+.queried-track-album-cover {
+  width: 300px;
+  height: auto;
+}
+
+.add-track-button {
+  position: absolute;
+  width: 40px;
+  height: auto;
+  right: 20px;
+  bottom: 20px;
+}
+
 
 @media only screen and (min-width: 401px) {
 
@@ -239,8 +276,28 @@ input[type=text]:focus {
 
   #plus-button {
     width: 2em;
-    margin-top: 22px
+    margin-top: 8px;
   }
+
+/* ======================
+    INTERMEDIATE: SEARCH
+   ====================== */
+
+  .track-results {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .queried-track-container {
+    margin: 17px auto;
+  }
+
+  .queried-track-title {
+    width: 300px;
+    height: 50px;
+    margin: 0;
+  }
+
 }
 
 
@@ -260,8 +317,8 @@ input[type=text]:focus {
   #github-logo {
     display: block;
     position: absolute;
-    top: 22px;
-    right: 35px;
+    top: 24px;
+    right: 65px;
   }
 }
 
@@ -352,4 +409,17 @@ input[type=text]:focus {
     margin: auto;
     width: 27px;
   }
+
+  /* ======================
+          WIDE: SEARCH
+     ====================== */
+
+  .searchbar input {
+    font-size: 35px;
+  }
+
+  .queried-track-title {
+    font-size: 17px;
+  }
+
 }

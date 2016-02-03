@@ -22,7 +22,7 @@ export function fetchSongs(searchbarQuery) {
   return dispatch => {
     SC.get('/tracks', {
       q: searchbarQuery,
-      limit: 10,
+      limit: 12,
       linked_partitioning: 1
     })
     .then((results) => {

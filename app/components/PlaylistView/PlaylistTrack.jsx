@@ -28,7 +28,7 @@ import React, { Component } from 'react';
    render() {
      const { track } = this.props;
      return (
-       <div className='queue-track wrapper'>
+       <div className='queue-track'>
          <img className='queue-track-album-cover' src={track.get('artwork_url')} />
          <div className='queue-track-description'>
            <p className='queue-track-user'>{track.get('user')}</p>

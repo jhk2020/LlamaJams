@@ -59,6 +59,7 @@ export default class Playlist extends Component {
 
   menuWrap = (isOpen) => {
     return {
+      top: $('#header-container').height() + 15,
       position: 'fixed',
       display: !isOpen ? 'none' : 'block',
       left: 0,

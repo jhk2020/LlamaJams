@@ -13,8 +13,8 @@ const QueryResults = ({ trackResults, searchbarQuery, playlistCode, socket, fetc
     return {
       overflowY: 'auto',
       overflowX: 'none',
-      height: trackResults.size > 0 ? height + 'px' : null,
-      paddingTop: '82px'
+      height: trackResults.size > 0 ? height - 100 + 'px' : null,
+      paddingTop: '75px'
     }
   }
 
@@ -22,9 +22,11 @@ const QueryResults = ({ trackResults, searchbarQuery, playlistCode, socket, fetc
     <div className='scrollBox' onScroll={scrollHandler} style={styling()}>
       <div className='track-results'>
         {trackResults.map(track => (
-          <div key={track.get('id')}>
-            <QueriedTrack track={track} playlistCode={playlistCode} socket={socket} addTrackToQueueAsync={addTrackToQueueAsync} />
-          </div>
+          <QueriedTrack key={track.get('id')}
+                        track={track}
+                        playlistCode={playlistCode}
+                        socket={socket}
+                        addTrackToQueueAsync={addTrackToQueueAsync} />
         ))}
       </div>
     </div>

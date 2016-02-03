@@ -1,9 +1,7 @@
-import { Map } from 'immutable';
+import { Map, fromJS } from 'immutable';
 
 const initialState = Map({
   jukeboxPlaying: false,
-  trackPosition: null,
-  playlistPosition: -1,
   currentStream: null,
   currentTrack: null
 });

@@ -4,6 +4,8 @@ const QueriedTrack = ({ track, playlistCode, socket }) => {
   let picUrl = '';
   if (track.get('artwork_url')) {
     picUrl = track.get('artwork_url').replace(/large/, 't300x300');
+  } else {
+    picUrl = 'assets/img/kuzco.png';
   }
   function clickHandler() {
     const newTrack = {
@@ -17,10 +19,12 @@ const QueriedTrack = ({ track, playlistCode, socket }) => {
     socket.emit('add track', newTrack);
   }
   return (
-    <div className='queried-track'>
-      <img src={picUrl} className='querysidebar-artwork' />
-      <div className='querysidebar-track-title'>{track.get('title')}</div>
-      <button onClick={clickHandler}>Add</button>
+    <div className='queried-track-container'>
+      <div className='queried-track'>
+        <img src={picUrl} className='queried-track-album-cover' />
+        <img className='add-track-button' src='assets/img/plus.png' onClick={clickHandler} />
+      </div>
+      <div className='queried-track-title'>{track.get('title')}</div>
     </div>
   )
 };
