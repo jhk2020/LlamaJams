@@ -33,7 +33,6 @@ export default class LoginForm extends Component {
       <div>
         <form onSubmit={this.submitHandler.bind(this)}>
           <input
-            className='input-host-jam'
             type='text'
             placeholder='Name your party...'
             value={this.state.playlistName}

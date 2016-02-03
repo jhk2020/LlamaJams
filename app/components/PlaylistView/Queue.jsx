@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import PlaylistTrack from './PlaylistTrack';
 
 export default class Queue extends Component {
+  queueFix = (isOpen) => {
+    return {
+      position: isOpen ? 'fixed' : null,
+      marginRight: isOpen ? '5%' : null
+    }
+  };
   render() {
-    const { queue, actions, socket } = this.props;
-    const queueRender = queue.map(track => (
-      <div key={track.get('_id')}>
-        <PlaylistTrack socket={socket} track={track} />
-      </div>
-    ));
+    const { queue, actions, socket, isOpen } = this.props;
+    const queueRender = queue.map(track => <PlaylistTrack socket={socket} track={track} key={track.get('_id')}/>);
     return (
-      <div className='queue'>
+      <div id='queue-container' style={this.queueFix(isOpen)}>
         { queue.size > 0 ? queueRender : null }
       </div>
     )

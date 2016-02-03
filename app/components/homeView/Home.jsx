@@ -38,27 +38,31 @@ export default class Home extends Component {
 
   render() {
     const { errorMessage, showForm, createNewPlaylist } = this.props;
+
     return (
-      <div className='padded-container'>
-        <img src='assets/img/llamalogo.png'/>
-        <div>
-          <div className='logo-container'>
-            { !this.state.showForm ?
-              <button className='button-lets-jam' onClick={this.clickHandler}>
-                <span className='text-lets-jam'>Start a Jam</span>
-              </button>
-            : <LoginForm createNewPlaylist={createNewPlaylist} /> }
-          </div>
-          <div className='guest-container'>
-            <form onSubmit={this.goToPlaylist}>
-              <input type='text'
-                     className='input-join-jam'
-                     placeholder='JOIN A JAM'
-                     onChange={this.handleCodeChange}
-                     value={this.state.playlistCode} />
-            </form>
-          </div>
+      <div id='main' className='wrapper clearfix'>
+        <div className='llama-logo-container'>
+          <img id='llama-logo' src='assets/img/llamalogo.png'/>
         </div>
+
+        <div className='forms-container'>
+
+          { !this.state.showForm ?
+            <input type='submit' className='start-form' value='START A JAM' onClick={this.clickHandler} />
+          : <LoginForm createNewPlaylist={createNewPlaylist} /> }
+
+          <form onSubmit={this.goToPlaylist}>
+            <input type='text'
+              id='join-form'
+              placeholder='JOIN A JAM'
+              onChange={this.handleCodeChange}
+              value={this.state.playlistCode} />
+          </form>
+
+        </div>
+
+
+
       </div>
     )
   }

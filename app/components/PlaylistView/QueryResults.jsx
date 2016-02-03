@@ -9,13 +9,12 @@ const QueryResults = ({ trackResults, searchbarQuery, playlistCode, socket, fetc
   }
 
   function styling () {
-    var height = $(window).height() - 82;
+    var height = $(window).height() - $('#header-container').height();
     return {
       overflowY: 'auto',
       overflowX: 'none',
-      height: height + 'px',
-      paddingTop: '82px',
-      width: '300px'
+      height: trackResults.size > 0 ? height + 'px' : null,
+      paddingTop: '82px'
     }
   }
 

@@ -28,15 +28,17 @@ import React, { Component } from 'react';
    render() {
      const { track } = this.props;
      return (
-       <div clasName='playlist-track'>
-         <img src={track.get('artwork_url')} />
-         <div>
-           {track.get('title')}
+       <div className='queue-track wrapper'>
+         <img className='queue-track-album-cover' src={track.get('artwork_url')} />
+         <div className='queue-track-description'>
+           <p className='queue-track-user'>{track.get('user')}</p>
+           <p className='queue-track-title'>{track.get('title')}</p>
          </div>
-         <div>{track.get('vote')}</div>
-         <button onClick={ !this.state.upvoted ? this.upVote : null }>upVote</button>
-         <button onClick={ !this.state.downvoted ? this.downVote : null }>downVote</button>
-         <br />
+         <div className='vote-buttons'>
+           <img src="assets/img/up.png" onClick={ !this.state.upvoted ? this.upVote : null } />
+            <p className="vote-number">{track.get('vote')}</p>
+            <img src="assets/img/down.png" onClick={ !this.state.downvoted ? this.downVote : null } />
+         </div>
        </div>
      )
    }

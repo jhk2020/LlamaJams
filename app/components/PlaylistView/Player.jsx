@@ -21,19 +21,24 @@ export default class Player extends Component {
       }
     }
     return (
-      <div>
+      <div className='player'>
         {currentTrack ?
-          <div className='current-track'>
-            <img src={picUrl} />
-            <div>{currentTrack.get('title')}</div>
-            <div>{currentTrack.get('user').username}</div>
-          </div>
-        : null}
-
-        {isOwner ?
           <div>
-            <button onClick={ currentStream ? togglePlayButton : startPlaying }>play</button>
-            <button onClick={ skipSong }>skip</button>
+            <div id='now-playing'>
+              <div class='pic-overlay'></div>
+              <img src={picUrl} />
+              {isOwner ?
+                <div id="playback-buttons">
+                  <img onClick={ currentStream ? togglePlayButton : startPlaying } src='assets/img/pause.png' />
+                  <img onClick={ skipSong } src="assets/img/skip.png" />
+                </div>
+                : null}
+              <h3 id="now-playing-inner-title">{currentTrack.get('title')}</h3>
+            </div>
+            <div id="now-playing-outer-title">
+              <h3>{currentTrack.get('user').username}</h3>
+              <h2>{currentTrack.get('title')}</h2>
+            </div>
           </div>
         : null}
 
