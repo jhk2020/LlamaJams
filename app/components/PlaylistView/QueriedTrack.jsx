@@ -22,9 +22,12 @@ const QueriedTrack = ({ track, playlistCode, socket }) => {
     <div className='queried-track-container'>
       <div className='queried-track'>
         <img src={picUrl} className='queried-track-album-cover' />
-        <img className='add-track-button' src='assets/img/plus.png' onClick={clickHandler} />
+        <img className='add-track-button' src='assets/img/plus.png' onClick={ clickHandler } />
       </div>
-      <div className='queried-track-title'>{track.get('title')}</div>
+      <div className='queried-track-title'>
+        <p>{ track.getIn(['user', 'username']) }</p>
+        <p>{ track.get('title') }</p>
+      </div>
     </div>
   )
 };

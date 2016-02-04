@@ -29,7 +29,13 @@ export default class Playlist extends Component {
       downVote(trackId)
     });
 
-    $('#plus-button')
+    $('#plus-button-container').click(function() {
+      if ($(this).css('transform') == 'none') {
+        $(this).css('transform', 'rotate(-45deg)');
+      } else {
+        $(this).css('transform', '');
+      }
+    });
   }
 
   leavePlaylist() {
@@ -41,6 +47,8 @@ export default class Playlist extends Component {
     this.setState({ isOpen: !this.state.isOpen }, () => {
       if (this.state.isOpen) {
         $('#searchbar-input').focus();
+      } else {
+        $('#plus-button-container').css('transform', '');
       }
     });
   };

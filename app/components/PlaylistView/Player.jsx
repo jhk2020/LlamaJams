@@ -41,13 +41,13 @@ export default class Player extends Component {
                   : null}
                 <h3 id="now-playing-inner-title">{title}</h3>
               </div>
-              <div id="now-playing-outer-title">
-                <h3>{user}</h3>
-                <h2>{title}</h2>
-              </div>
             </div>
           : placeholder }
           <br/>
+          <div id="now-playing-outer-title">
+            <h3>{user}</h3>
+            <h2>{title}</h2>
+          </div>
           <span id='playlist-code'>CODE: { playlistCode }</span>
         </div>
     )
