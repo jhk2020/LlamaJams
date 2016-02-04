@@ -18,8 +18,8 @@ export default class Home extends Component {
   }
 
   clickHandler = () => {
-    this.setState({
-      showForm: true
+    this.setState({ showForm: true }, () => {
+      $('#start-party-form').focus();
     });
   };
 
@@ -48,15 +48,16 @@ export default class Home extends Component {
         <div className='forms-container'>
 
           { !this.state.showForm ?
-            <input type='submit' className='start-form' value='START A JAM' onClick={this.clickHandler} />
+            <input type='submit' id='start-button' className='forms' value='START A JAM' onClick={this.clickHandler} />
           : <LoginForm createNewPlaylist={createNewPlaylist} /> }
 
           <form onSubmit={this.goToPlaylist}>
             <input type='text'
-              id='join-form'
-              placeholder='JOIN A JAM'
-              onChange={this.handleCodeChange}
-              value={this.state.playlistCode} />
+                   className='forms'
+                   placeholder='JOIN A JAM'
+                   autoComplete='off'
+                   onChange={this.handleCodeChange}
+                   value={this.state.playlistCode} />
           </form>
 
         </div>

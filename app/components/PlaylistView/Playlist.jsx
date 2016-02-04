@@ -28,6 +28,8 @@ export default class Playlist extends Component {
     socket.on('track downvoted', trackId => {
       downVote(trackId)
     });
+
+    $('#plus-button')
   }
 
   leavePlaylist() {
@@ -76,9 +78,11 @@ export default class Playlist extends Component {
     }
 
     return (
-      <div id='main' className='wrapper clearfix'>
-        <img id='plus-button' src='assets/img/plus.png' onClick={this.toggleNavbar} />
-        <div className='overlay' onClick={this.toggleNavbar} style={this.overlay(this.state.isOpen)}></div>
+      <div id='main' className='clearfix'>
+        <div id='plus-button-container' onClick={this.toggleNavbar}>
+          <img id='plus-button' src='assets/img/plus.png' />
+        </div>
+        <div className='overlay' onClick={this.state.isOpen ? this.toggleNavbar : null} style={this.overlay(this.state.isOpen)}></div>
           <Player />
           <Queue socket={this.props.socket} isOpen={this.state.isOpen} />
 
@@ -90,16 +94,3 @@ export default class Playlist extends Component {
     );
   }
 };
-
-// <div className='menu' style={this.menuWrap(this.state.isOpen)}>
-//   <QuerySidebar socket={this.props.socket} />
-// </div>
-
-// <div className='playlistcode-container'>
-//   <span className='guestcode-span'>
-//     GuestCode: {this.props.currentPlaylist.get('code')}
-//   </span>
-//   <button onClick={this.leavePlaylist} className='leavePlaylist-button'>
-//     LEAVE PLAYLIST
-//   </button>
-// </div>

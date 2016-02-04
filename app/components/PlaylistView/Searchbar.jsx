@@ -19,13 +19,13 @@ export default class Searchbar extends Component {
          <div className='searchbar'>
            <form onSubmit={this.submitHandler.bind(this)}>
              <input  name='query'
-               value={searchbarQuery}
-               type='text'
-               onChange={(event) => {
-                 updateQuery(event);
-               }}
-               id='searchbar-input'
-               autoComplete='off' />
+                     value={searchbarQuery}
+                     type='text'
+                     onChange={(event) => {
+                       updateQuery(event);
+                     }}
+                     id='searchbar-input'
+                     autoComplete='off' />
            </form>
          </div>
        </div>

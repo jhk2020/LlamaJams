@@ -5,7 +5,7 @@ export default class Queue extends Component {
   queueFix = (isOpen) => {
     return {
       position: isOpen ? 'fixed' : null,
-      marginRight: isOpen ? '5%' : null
+      width: isOpen ? 'null' : '100%'
     }
   };
   render() {

@@ -7,8 +7,12 @@ body {
   margin: 0;
 }
 
-input[type=text]:focus {
+input[type=text]:focus, input[type=submit]:focus {
   outline: none;
+}
+
+input[type=submit] {
+  color: white;
 }
 
 #header-container {
@@ -53,14 +57,23 @@ input[type=text]:focus {
   font-size: 1.3em;
   float: left;
   color: white;
+  width: 80%;
 }
 
 #plus-button {
-  position: absolute;
   width: 1.5em;
   height: auto;
-  top: 15px;
-  right: 15px;
+  margin: auto;
+}
+
+#plus-button-container {
+  display: flex;
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  z-index: 2;
+  height: 35px;
+  width: 35px;
 }
 
 /* ================
@@ -82,7 +95,7 @@ input[type=text]:focus {
   display: none;
 }
 
-.forms-container input {
+.forms {
   display: block;
   background-color: #F16256;
   width: 90%;
@@ -93,8 +106,13 @@ input[type=text]:focus {
   text-align: center;
   font-size: 1.2em;
   border-radius: 5px;
+  max-width: 430px;
+  color: white;
 }
 
+#start-button {
+  height: 42px;
+}
 
 /* =====================
       MOBILE: PLAYER
@@ -108,6 +126,13 @@ input[type=text]:focus {
 
 #image-placeholder img {
   width: 100%;
+}
+
+#playlist-code {
+  font-size: 22px;
+  font-weight: bold;
+  border: 1px solid #F16256;
+  padding: 7px 20px;
 }
 
 #now-playing {
@@ -158,8 +183,13 @@ input[type=text]:focus {
    ===================== */
 
 #queue-container {
-  margin-top: 15px;
+  margin-top: 30px;
   text-align: left;
+}
+
+.queue-track:first-child {
+  border-top: 1px solid #ACACAC;
+  padding-top: 15px;
 }
 
 .queue-track {
@@ -276,7 +306,11 @@ input[type=text]:focus {
 
   #plus-button {
     width: 2em;
-    margin-top: 8px;
+  }
+
+  #plus-button-container {
+    margin-top: 12px;
+    margin-right: 15px;
   }
 
 /* ======================
@@ -306,14 +340,15 @@ input[type=text]:focus {
    ================ */
 
 @media only screen and (min-width: 768px) {
-  .forms-container input {
+  .forms {
     display: inline-block;
     width: 40%;
-    max-width: 430px;
   }
+
   .forms-container {
     margin-top: 45px;
   }
+
   #github-logo {
     display: block;
     position: absolute;
@@ -331,7 +366,9 @@ input[type=text]:focus {
 
   .player {
     width: 750px;
-    margin: 50px auto;
+    height: 400px;
+    margin: 50px auto 100px;
+    display: flex;
   }
 
   #now-playing {
@@ -358,16 +395,21 @@ input[type=text]:focus {
     font-weight: bolder;
   }
 
+  #image-placeholder {
+    margin: auto;
+  }
+
+  #playlist-code {
+    margin: auto;
+    font-size: 30px;
+  }
+
 /* ======================
         WIDE: QUEUE
    ====================== */
 
   #queue-container {
     margin: auto;
-  }
-
-  .queue-track:first-of-type {
-    margin-top: 500px;
   }
 
   .queue-track:last-of-type {

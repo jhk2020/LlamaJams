@@ -9,12 +9,15 @@ function mapStateToProps(state) {
   const jukeboxPlaying = state.player.get('jukeboxPlaying'),
       trackPosition = state.player.get('trackPosition'),
       currentTrack = state.player.get('currentTrack'),
-      currentStream = state.player.get('currentStream');
+      currentStream = state.player.get('currentStream'),
+      playlistCode = state.currentPlaylist.get('code');
+      
   return {
     jukeboxPlaying,
     trackPosition,
     currentTrack,
     currentStream,
+    playlistCode,
     isOwner: state.currentPlaylist.get('isOwner')
   }
 }

@@ -33,9 +33,12 @@ export default class LoginForm extends Component {
       <div>
         <form onSubmit={this.submitHandler.bind(this)}>
           <input
+            id='start-party-form'
+            className='forms'
             type='text'
             placeholder='Name your party...'
             value={this.state.playlistName}
+            autoComplete='off'
             onChange={this.handlePlaylistChange.bind(this)} />
         </form>
         {this.props.errorMessage ? <p>{this.props.errorMessage}</p> : null}
