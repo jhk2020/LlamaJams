@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import configStore from './store/ConfigStore';
 import getRoutes from './routes/routes';
-import { browserHistory } from 'react-router';
+import { Router, browserHistory, match } from 'react-router';
 import { fromJS } from 'immutable';
+import createLocation from 'history/lib/createLocation';
+
 
 let initialState;
 if(window.__INITIAL_STATE__) {
@@ -27,7 +29,9 @@ const store = configStore(browserHistory, initialState);
 
 const node = (
   <Provider store={store}>
-    { getRoutes() }
+    <Router history={browserHistory}>
+      { getRoutes() }
+    </Router>
   </Provider>
 )
 

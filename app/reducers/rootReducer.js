@@ -16,8 +16,7 @@ const rootReducer = combineReducers({
   queriedTracks,
   queue,
   player,
-  routing: routeReducer,
-  reduxAsyncConnect
+  routing: routeReducer
 });
 
 export default rootReducer;

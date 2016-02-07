@@ -7,7 +7,7 @@ export default class QuerySidebar extends Component {
     return (
       <div>
         <Searchbar />
-        <QueryResults {...this.props} />
+        <QueryResults {...this.props} /> 
       </div>
     )
   }

@@ -35,9 +35,9 @@ import React, { Component } from 'react';
            <p className='queue-track-title'>{track.get('title')}</p>
          </div>
          <div className='vote-buttons'>
-           <img src="assets/img/up.png" onClick={ !this.state.upvoted ? this.upVote : null } />
+           <img src="/static/assets/img/up.png" onClick={ !this.state.upvoted ? this.upVote : null } />
             <p className="vote-number">{track.get('vote')}</p>
-            <img src="assets/img/down.png" onClick={ !this.state.downvoted ? this.downVote : null } />
+            <img src="/static/assets/img/down.png" onClick={ !this.state.downvoted ? this.downVote : null } />
          </div>
        </div>
      )

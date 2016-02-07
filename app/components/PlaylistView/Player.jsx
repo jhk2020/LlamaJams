@@ -21,7 +21,7 @@ export default class Player extends Component {
 
     const placeholder = !currentStream ?
       <div id='image-placeholder' onClick={ isOwner ? startPlaying : null }>
-        <img src='assets/img/llama2.png' />
+        <img src='/static/assets/img/llama2.png' />
         <span>Add some songs and click the llama!</span>
       </div>
     : null;
@@ -35,8 +35,8 @@ export default class Player extends Component {
                 <img src={picUrl} />
                 {isOwner ?
                   <div id="playback-buttons">
-                    <img onClick={ togglePlayButton } src={jukeboxPlaying ? 'assets/img/pause.png' : 'assets/img/play.png'} />
-                    <img onClick={ skipSong } src="assets/img/skip.png" />
+                    <img onClick={ togglePlayButton } src={jukeboxPlaying ? '/static/assets/img/pause.png' : '/static/assets/img/play.png'} />
+                    <img onClick={ skipSong } src="/static/assets/img/skip.png" />
                   </div>
                   : null}
                 <h3 id="now-playing-inner-title">{title}</h3>

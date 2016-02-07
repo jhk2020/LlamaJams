@@ -11,22 +11,23 @@ export default class Home extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.currentPlaylist.get('code')) {
-      this.props.pushState(`/playlist/${nextProps.currentPlaylist.get('code')}`);
-    }
-  }
-
   clickHandler = () => {
     this.setState({ showForm: true }, () => {
       $('#start-party-form').focus();
     });
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.currentPlaylist.get('code')) {
+      this.props.pushState(`/playlist/${nextProps.currentPlaylist.get('code')}`);
+    }
+  }
+
   goToPlaylist = (e) => {
     e.preventDefault();
     if (this.state.playlistCode !== '') {
       this.props.loadPlaylist(this.state.playlistCode);
+
     }
   };
 
@@ -42,7 +43,7 @@ export default class Home extends Component {
     return (
       <div id='main' className='wrapper clearfix'>
         <div className='llama-logo-container'>
-          <img id='llama-logo' src='assets/img/llamalogo.png'/>
+          <img id='llama-logo' src='/static/assets/img/llamalogo.png'/>
         </div>
 
         <div className='forms-container'>

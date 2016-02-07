@@ -8,20 +8,13 @@ export default function promiseMiddleware() {
     next({ type: REQUEST });
 
     return promise
-      .then(handleErrors)
-      .then(res => res.json())
       .then(
-        res => next({ res, type: SUCCESS })
+        res => {
+          next({ res: res.body, type: SUCCESS })
+        }
       ).catch(error => {
-        console.error(error);
+        console.error('ERROR FROM API:', error);
         next({ error, type: FAILURE });
       });
   };
-}
-
-function handleErrors(response) {
-  if(!response.ok) {
-    throw Error(response.error);
-  }
-  return response;
 }

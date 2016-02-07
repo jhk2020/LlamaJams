@@ -13,6 +13,7 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack.config.js';
+
 import PrettyError from 'pretty-error';
 
 import React from 'react';
@@ -54,7 +55,7 @@ app.set('secret', config.secret);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-app.use(express.static(__dirname + '/../public'));
+app.use('/static', express.static(__dirname + '/../public'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -87,8 +88,9 @@ apiRoutes.post('/playlist', function(req, res) {
 apiRoutes.get('/playlist/:id', function(req, res) {
   Playlist.findOneAsync({ code: req.params.id })
     .then(function(playlist) {
+      console.log(playlist)
       if (!playlist) {
-        console.error('No playlist found: ', pretty.render(err));
+        console.error('No playlist found!');
         res.status(500).send({ error: 'Playlist not found' });
         return;
       }
@@ -110,10 +112,9 @@ app.use('/api', apiRoutes);
 
 app.use((req, res) => {
   const history = createHistory();
-  const location = createLocation(req.url);
+  const location = createLocation(req.originalUrl);
   const routes = getRoutes();
   const store = configStore(history);
-
 
   match({ history, routes, location }, (error, redirectLocation, renderProps) => {
     if (redirectLocation) {
@@ -124,17 +125,37 @@ app.use((req, res) => {
     } else if (!renderProps) {
       return res.status(404).send('Not found.');
     } else if (renderProps) {
-      loadOnServer(renderProps, store).then(() => {
-        const componentHTML = renderToString(
-          <Provider store={store}>
-            <ReduxAsyncConnect {...renderProps}/>
-          </Provider>
-        );
-        const initialState = escape(JSON.stringify(store.getState()));
-
-        res.render('index', { componentHTML, initialState });
+      console.log('BEFORE LOAD ON SERVER: ', store.getState())
+      function fetchComponentData(dispatch, components, params) {
+        const componentsWithFetchData = components.filter(component => {
+          if (!component) {
+            return false;
+          } else {
+            return Boolean(component.fetchData ? component.fetchData
+              : (component.WrappedComponent ? component.WrappedComponent.fetchData : null));
+          }
+        });
+        const promises = componentsWithFetchData.map(component => dispatch(component.fetchData(params)));
+        return Promise.all(promises);
+      }
+      fetchComponentData(store.dispatch, renderProps.components, renderProps.params)
+      .then(() => {
+        console.log('AFTER LOAD ON SERVER', store.getState())
+        try {
+          const componentHTML = renderToString(
+            <Provider store={store}>
+              <RouterContext {...renderProps}/>
+            </Provider>
+          );
+          console.log('componentHTML ', componentHTML)
+          const initialState = escape(JSON.stringify(store.getState()));
+          res.render('index', { componentHTML, initialState });
+        }
+        catch(e) {
+          console.error('error: ', pretty.render(e));
+          throw e;
+        }
       });
-
     }
   });
 });

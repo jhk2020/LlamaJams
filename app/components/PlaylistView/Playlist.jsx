@@ -3,13 +3,19 @@ import Search from '../../containers/SearchbarContainer';
 import QuerySidebar from './QuerySidebar';
 import Queue from '../../containers/QueueContainer';
 import Player from '../../containers/PlayerContainer';
-import { loadPlaylist  } from '../../actions/playlistViewActions/currentPlaylistActions';
+import { loadPlaylist } from '../../actions/playlistViewActions/currentPlaylistActions';
 
 export default class Playlist extends Component {
+
+  static fetchData(params) {
+    return loadPlaylist(params.id);
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      headerHeight: 0
     }
   }
 
@@ -36,19 +42,23 @@ export default class Playlist extends Component {
         $(this).css('transform', '');
       }
     });
+
+    this.setState({headerHeight: $('#header-container').height()});
   }
 
-  leavePlaylist() {
+  leavePlaylist = () => {
     socket.emit('leave playlist');
     this.props.leavePlaylist();
-  }
+  };
 
   toggleNavbar = () => {
     this.setState({ isOpen: !this.state.isOpen }, () => {
-      if (this.state.isOpen) {
-        $('#searchbar-input').focus();
-      } else {
-        $('#plus-button-container').css('transform', '');
+      if ($) {
+        if (this.state.isOpen) {
+          $('#searchbar-input').focus();
+        } else {
+          $('#plus-button-container').css('transform', '');
+        }
       }
     });
   };
@@ -69,7 +79,7 @@ export default class Playlist extends Component {
 
   menuWrap = (isOpen) => {
     return {
-      top: $('#header-container').height() + 15,
+      top: this.state.headerHeight + 15,
       position: 'fixed',
       display: !isOpen ? 'none' : 'block',
       left: 0,
@@ -80,15 +90,10 @@ export default class Playlist extends Component {
   };
 
   render() {
-    let el = document.getElementsByClassName('title-home')[0];
-    if (el) {
-      el.className = 'title-playlist';
-    }
-
     return (
       <div id='main' className='clearfix'>
         <div id='plus-button-container' onClick={this.toggleNavbar}>
-          <img id='plus-button' src='assets/img/plus.png' />
+          <img id='plus-button' src='/static/assets/img/plus.png' />
         </div>
         <div className='overlay' onClick={this.state.isOpen ? this.toggleNavbar : null} style={this.overlay(this.state.isOpen)}></div>
           <Player />

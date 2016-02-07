@@ -21,6 +21,7 @@ export default function currentPlaylist(state = initialState, action) {
       return state.update('code', code => action.playlistCode);
 
     case 'LOAD_PLAYLIST_SUCCESS':
+      debugger;
       var temp = Object.assign({}, action.res.playlist, {
         socketId: '',
         error: ''

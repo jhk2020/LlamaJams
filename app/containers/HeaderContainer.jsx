@@ -4,8 +4,7 @@ import Header from '../components/homeView/Header';
 
 function mapStateToProps(state) {
   return {
-    playlistName: state.currentPlaylist.get('title'),
-    url: state.routing.location.pathname
+    playlistName: state.currentPlaylist.get('title')
   }
 }
 

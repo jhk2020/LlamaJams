@@ -8,11 +8,9 @@ import { ReduxAsyncConnect } from 'redux-async-connect';
 
 export default function() {
   return (
-    <Router render={ (props) => <ReduxAsyncConnect {...props}/> } history={browserHistory}>
-      <Route path='/' component={Main} >
-        <IndexRoute component={Home} />
-        <Route path='/playlist/:id' component={Playlist} />
-      </Route>
-    </Router>
+    <Route path='/' component={Main} >
+      <IndexRoute component={Home} />
+      <Route path='playlist/:id' component={Playlist} />
+    </Route>
   )
 }
