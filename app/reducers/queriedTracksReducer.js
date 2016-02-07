@@ -8,6 +8,8 @@ const initialState = Map({
 export default function queriedTracks (state = initialState, action) {
   switch (action.type) {
     case 'UPDATE_QUERY_TRACKS':
+      return state.update('trackResults', results => fromJS(action.results));
+    case 'FETCH_MORE_SONGS_FROM_SC':
       return state.update('trackResults', results => results.concat(fromJS(action.results)));
     case 'CLEAR_QUERY':
       const tempState = state.update('trackResults', results => List());

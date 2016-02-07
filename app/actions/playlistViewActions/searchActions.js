@@ -43,13 +43,20 @@ function saveNextPageUrl(url) {
   }
 }
 
+function fetchMoreSongsFromSC(results) {
+  return {
+    type: 'FETCH_MORE_SONGS_FROM_SC',
+    results
+  }
+}
+
 export function fetchMoreSongs(searchbarQuery) {
   return (dispatch, getState) => {
     let { queriedTracks } = getState();
     if (queriedTracks.get('nextPageUrl')) {
       $.get(queriedTracks.get('nextPageUrl'))
         .done((results) => {
-          dispatch(updateQueryTracks(results.collection));
+          dispatch(fetchMoreSongsFromSC(results.collection));
           if (results.next_href) {
             dispatch(saveNextPageUrl(results.next_href));
           } else {
