@@ -15,12 +15,6 @@ import bluebird from 'bluebird';
 bluebird.promisifyAll(mongoose);
 import config from './db/config';
 
-// WEBPACK
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import webpackConfig from '../../webpack.config.dev.js';
-
 // REACT SSR
 import React from 'react';
 import { renderToString } from 'react-dom/server';
@@ -30,6 +24,12 @@ import { RouterContext, match } from 'react-router';
 import createHistory from 'history/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
 import getRoutes from '../common/routes/routes';
+
+// WEBPACK
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+import webpackConfig from '../../webpack.config.dev.js';
 
 // SOCKET.IO
 import SocketIo from 'socket.io';
@@ -48,12 +48,14 @@ const app = express();
 
 /*-------------------------------- WEBPACK -----------------------------------*/
 
-var compiler = webpack(webpackConfig);
-app.use(webpackDevMiddleware(compiler, {
-  noInfo: true,
-  publicPath: webpackConfig.output.publicPath
-}));
-app.use(webpackHotMiddleware(compiler));
+if (process.env.NODE_ENV === 'development') {
+  var compiler = webpack(webpackConfig);
+  app.use(webpackDevMiddleware(compiler, {
+    noInfo: true,
+    publicPath: webpackConfig.output.publicPath
+  }));
+  app.use(webpackHotMiddleware(compiler));
+}
 
 /*------------------------------ BASIC CONFIG --------------------------------*/
 
@@ -120,11 +122,8 @@ app.use((req, res) => {
 });
 
 
-
-const PORT = process.env.PORT || 5000;
-
-const server = app.listen(PORT, function() {
-  console.log('LISTENING ON:', PORT);
+const server = app.listen(port, function() {
+  console.log('LISTENING ON:', port);
 });
 
 const io = new SocketIo(server, { path: '/api/queue'});

@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "start": "nodemon src/server/index.js"
+    "start": "NODE_ENV=production node src/server/index.js",
+    "build": "NODE_ENV=production webpack --config ./webpack.config.prod.js",
+    "dev": "NODE_ENV=development nodemon src/server/index.js"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/LlamaJams/LlamaJams/issues"
   },
-  "homepage": "https://github.com/LlamaJams/LlamaJams#readme",
+  "homepage": "https://github.com/LlamaJams/LlamaJams",
   "dependencies": {
     "bluebird": "^2.10.2",
     "body-parser": "^1.14.1",
