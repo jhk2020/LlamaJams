@@ -11,13 +11,6 @@ export function clearQuery() {
   }
 }
 
-function updateQueryTracks(results) {
-  return {
-    type: 'UPDATE_QUERY_TRACKS',
-    results
-  }
-}
-
 export function fetchSongs(searchbarQuery) {
   return dispatch => {
     SC.get('/tracks', {
@@ -36,17 +29,17 @@ export function fetchSongs(searchbarQuery) {
   }
 }
 
+function updateQueryTracks(results) {
+  return {
+    type: 'UPDATE_QUERY_TRACKS',
+    results
+  }
+}
+
 function saveNextPageUrl(url) {
   return {
     type: 'SAVE_NEXT_PAGE_URL',
     url
-  }
-}
-
-function fetchMoreSongsFromSC(results) {
-  return {
-    type: 'FETCH_MORE_SONGS_FROM_SC',
-    results
   }
 }
 
@@ -64,5 +57,12 @@ export function fetchMoreSongs(searchbarQuery) {
           }
         })
     }
+  }
+}
+
+function fetchMoreSongsFromSC(results) {
+  return {
+    type: 'FETCH_MORE_SONGS_FROM_SC',
+    results
   }
 }

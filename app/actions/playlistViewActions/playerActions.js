@@ -15,6 +15,18 @@ export function startPlaying() {
   }
 }
 
+export function skipSong() {
+  return (dispatch, getState) => {
+    const { queue, player } = getState();
+    if (queue.size === 0) {
+      const currentStream = player.get('currentStream');
+      currentStream.pause();
+      dispatch(pausePlaying());
+    }
+    dispatch(playNextTrack());
+  }
+}
+
 function setCurrentTrack(stream, track) {
   return {
     type: 'SET_CURRENT_TRACK',
@@ -26,18 +38,6 @@ function setCurrentTrack(stream, track) {
 function playNextTrack() {
   return {
     type: 'PLAY_NEXT_TRACK'
-  }
-}
-
-export function skipSong() {
-  return (dispatch, getState) => {
-    const { queue, player } = getState();
-    if (queue.size === 0) {
-      const currentStream = player.get('currentStream');
-      currentStream.pause();
-      dispatch(pausePlaying());
-    }
-    dispatch(playNextTrack());
   }
 }
 

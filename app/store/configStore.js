@@ -1,7 +1,7 @@
 import rootReducer from '../reducers/rootReducer';
 import thunk from 'redux-thunk';
 import routes from '../routes/routes';
-import { syncHistory } from 'redux-simple-router';
+import { syncHistory } from 'react-router-redux';
 import { applyMiddleware, compose, createStore } from 'redux';
 import promiseMiddleware from '../middlewares/promiseMiddleware';
 

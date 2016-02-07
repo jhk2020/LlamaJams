@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Home from '../components/homeView/Home';
 import { createNewPlaylist } from '../actions/homeActions';
 import { setCurrentPlaylistCode, loadPlaylist } from '../actions/playlistViewActions/currentPlaylistActions';
-import { routeActions } from 'redux-simple-router';
+import { routeActions } from 'react-router-redux';
 
 function mapStateToProps(state) {
   const { home, currentPlaylist } = state;
@@ -25,7 +24,7 @@ function mapDispatchToProps(dispatch) {
     loadPlaylist: (code) => {
       dispatch(loadPlaylist(code));
     },
-    pushState: (route) => {
+    moveTo: (route) => {
       dispatch(routeActions.push(route));
     }
   }

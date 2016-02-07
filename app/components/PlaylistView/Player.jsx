@@ -22,7 +22,7 @@ export default class Player extends Component {
     const placeholder = !currentStream ?
       <div id='image-placeholder' onClick={ isOwner ? startPlaying : null }>
         <img src='/static/assets/img/llama2.png' />
-        <span>Add some songs and click the llama!</span>
+        { isOwner ? <span>Add some songs and click the llama!</span> : <span>Add your songs to the playlist!</span> }
       </div>
     : null;
 

@@ -7,7 +7,6 @@ export function createNewPlaylist(playlistName) {
   }
 }
 
-
 function generatePromise (body) {
   const promise = new Promise((resolve, reject) => {
     request

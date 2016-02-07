@@ -1,5 +1,11 @@
-import { routeActions } from 'redux-simple-router';
 import request from 'superagent';
+
+export function loadPlaylist(code) {
+  return {
+    types: ['LOAD_PLAYLIST', 'LOAD_PLAYLIST_SUCCESS', 'LOAD_PLAYLIST_FAIL'],
+    promise: generatePromise(code)
+  }
+}
 
 function generatePromise (body) {
   const promise = new Promise((resolve, reject) => {
@@ -9,34 +15,6 @@ function generatePromise (body) {
   });
   return promise;
 }
-
-export function loadPlaylist(code) {
-  return {
-    types: ['LOAD_PLAYLIST', 'LOAD_PLAYLIST_SUCCESS', 'LOAD_PLAYLIST_FAIL'],
-    promise: generatePromise(code)
-  }
-}
-
-// export function loadPlaylist(code) {
-//   return dispatch => {
-//     request
-//     .get(`http://localhost:5000/api/playlist/${code}`)
-//     .end((err, res) => {
-//       if (err) {
-//         dispatch(routeActions.replace('/'));
-//       } else {
-//         dispatch(loadPlaylistSuccess(res.body));
-//       }
-//     });
-//   }
-// }
-//
-// function loadPlaylistSuccess(res) {
-//   return {
-//     type: 'LOAD_PLAYLIST_SUCCESS',
-//     res
-//   }
-// }
 
 export function setCurrentPlaylistCode(playlistCode) {
   return {

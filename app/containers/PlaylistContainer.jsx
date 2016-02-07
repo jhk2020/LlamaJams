@@ -5,7 +5,7 @@ import Playlist from '../components/PlaylistView/Playlist';
 import { receiveSocket } from '../actions/playlistViewActions/currentPlaylistActions';
 import { addTrackToQueue } from '../actions/playlistViewActions/querybarActions';
 import { upVote, downVote } from '../actions/playlistViewActions/queueActions';
-import { routeActions } from 'redux-simple-router';
+import { routeActions } from 'react-router-redux';
 import io from 'socket.io-client';
 
 const socket = io('', { path: '/api/queue'});
