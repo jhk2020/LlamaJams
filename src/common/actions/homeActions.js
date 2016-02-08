@@ -1,4 +1,5 @@
 import request from 'superagent';
+import config from '../../config';
 
 export function createNewPlaylist(playlistName) {
   return {
@@ -10,7 +11,7 @@ export function createNewPlaylist(playlistName) {
 function generatePromise (body) {
   const promise = new Promise((resolve, reject) => {
     request
-    .post('http://localhost:5000/api/playlist')
+    .post('http://' + config.host + ':' + config.port + '/api/playlist')
     .set('Content-Type', 'application/json')
     .send(JSON.stringify(body))
     .end((err, data) => err ? reject(err) : resolve(data));

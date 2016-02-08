@@ -1,4 +1,5 @@
 import request from 'superagent';
+import config from '../../../config';
 
 export function loadPlaylist(code) {
   return {
@@ -10,7 +11,7 @@ export function loadPlaylist(code) {
 function generatePromise (body) {
   const promise = new Promise((resolve, reject) => {
     request
-    .get(`http://localhost:5000/api/playlist/${body}`)
+    .get('http://' + config.host + ':' + config.port + `/api/playlist/${body}`)
     .end((err, data) => err ? reject(err) : resolve(data));
   });
   return promise;
