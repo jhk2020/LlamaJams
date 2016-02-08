@@ -7,7 +7,7 @@ module.exports = {
     './src/client/App.jsx'
   ],
   output: {
-    path: path.join(__dirname, 'public'),
+    path: path.join(__dirname, 'static'),
     filename: 'bundle.js',
     publicPath: '/static/'
   },

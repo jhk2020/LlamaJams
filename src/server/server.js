@@ -59,7 +59,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-app.use('/static', express.static(__dirname + '/../../public'));
+app.use('/static', express.static(__dirname + '/../../static'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
