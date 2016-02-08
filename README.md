@@ -70,6 +70,7 @@ LlamaJams leverages media queries and flexbox for responsive web design. More wo
 
 ## Development
 ```
+npm install
 npm run dev
 ```
 Then point your browser to `localhost:5000`.

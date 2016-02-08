@@ -19,6 +19,7 @@ export default class Home extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.currentPlaylist.get('code')) {
+      document.activeElement.blur();
       this.props.moveTo(`/playlist/${nextProps.currentPlaylist.get('code')}`);
     }
   }
