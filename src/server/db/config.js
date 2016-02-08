@@ -1,4 +1,4 @@
 module.exports = {
   secret: 'llamjamsllamajams',
-  database: process.env.MONGOLAB_URI || 'mongodb://localhost/llamajams'
+  database: 'MONGOLAB_URI=mongodb://<dbuser>:<dbpassword>@ds059125.mongolab.com:59125/heroku_92xwhzpd'
 }
