@@ -4,12 +4,11 @@ export default function promiseMiddleware() {
 
     if (!promise) return next(action);
 
-    const [REQUEST, SUCCESS, FAILURE] = types;
-    next({ type: REQUEST });
-
+    const [SUCCESS, FAILURE] = types;
     return promise
       .then(
         res => {
+          debugger;
           next({ res: res.body, type: SUCCESS })
         }
       ).catch(error => {

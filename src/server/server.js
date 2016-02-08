@@ -60,6 +60,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use('/static', express.static(__dirname + '/../../static'));
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST')
+  if ('OPTIONS' === req.method) {
+    res.status(204).send();
+  } else {
+    next();
+  }
+});
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 

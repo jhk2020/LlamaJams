@@ -26,6 +26,7 @@ export default class Home extends Component {
   }
 
   goToPlaylist = (e) => {
+    debugger;
     e.preventDefault();
     if (this.state.codeInput !== '') {
       this.props.loadPlaylist(this.state.codeInput);

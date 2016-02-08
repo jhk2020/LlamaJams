@@ -3,7 +3,7 @@ import config from '../../config';
 
 export function createNewPlaylist(playlistName) {
   return {
-    types: ['CREATE_PLAYLIST', 'CREATE_PLAYLIST_SUCCESS', 'CREATE_PLAYLIST_FAIL'],
+    types: ['CREATE_PLAYLIST_SUCCESS', 'CREATE_PLAYLIST_FAIL'],
     promise: generatePromise({ playlistName })
   }
 }
@@ -11,7 +11,7 @@ export function createNewPlaylist(playlistName) {
 function generatePromise (body) {
   const promise = new Promise((resolve, reject) => {
     request
-    .post('https://llamajams.herokuapp.com/api/playlist')
+    .post('http://localhost:5000/api/playlist')
     .set('Content-Type', 'application/json')
     .send(JSON.stringify(body))
     .end((err, data) => err ? reject(err) : resolve(data));
