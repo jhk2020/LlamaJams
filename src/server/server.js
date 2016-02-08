@@ -25,12 +25,6 @@ import createHistory from 'history/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
 import getRoutes from '../common/routes/routes';
 
-// WEBPACK
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import webpackConfig from '../../webpack.config.dev.js';
-
 // SOCKET.IO
 import SocketIo from 'socket.io';
 import socketEvents from './socketEvents';
@@ -49,12 +43,15 @@ const app = express();
 /*-------------------------------- WEBPACK -----------------------------------*/
 
 if (process.env.NODE_ENV === 'development') {
+  // WEBPACK
+  var webpack = require('webpack');
+  var webpackConfig = require('../../webpack.config.dev.js');
   var compiler = webpack(webpackConfig);
-  app.use(webpackDevMiddleware(compiler, {
+  app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: true,
     publicPath: webpackConfig.output.publicPath
   }));
-  app.use(webpackHotMiddleware(compiler));
+  app.use(require('webpack-hot-middleware')(compiler));
 }
 
 /*------------------------------ BASIC CONFIG --------------------------------*/
