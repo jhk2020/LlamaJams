@@ -6,7 +6,8 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showLoginForm: false
+      showLoginForm: false,
+      codeInput: ''
     }
   }
 
@@ -24,14 +25,13 @@ export default class Home extends Component {
 
   goToPlaylist = (e) => {
     e.preventDefault();
-    const playlistCode = this.props.currentPlaylist.get('playlistCode');
-    if (playlistCode !== '') {
-      this.props.loadPlaylist(playlistCode);
+    if (this.state.codeInput !== '') {
+      this.props.loadPlaylist(this.state.codeInput);
     }
   };
 
   handleCodeChange = (e) => {
-    this.props.setCurrentPlaylistCode(e.target.value);
+    this.setState({codeInput: e.target.value});
   };
 
   render() {

@@ -17,11 +17,7 @@ export default function currentPlaylist(state = initialState, action) {
     case 'CREATE_PLAYLIST_FAIL':
       return state.update('error', error => action.error);
 
-    case 'SET_CURRENT_PLAYLIST_CODE':
-      return state.update('code', code => action.playlistCode);
-
     case 'LOAD_PLAYLIST_SUCCESS':
-      debugger;
       var temp = Object.assign({}, action.res.playlist, {
         socketId: '',
         error: ''

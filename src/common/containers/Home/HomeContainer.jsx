@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Home from '../../components/homeView/Home';
 import { createNewPlaylist } from '../../actions/homeActions';
-import { setCurrentPlaylistCode, loadPlaylist } from '../../actions/playlistViewActions/currentPlaylistActions';
+import { loadPlaylist } from '../../actions/playlistViewActions/currentPlaylistActions';
 import { routeActions } from 'react-router-redux';
 
 function mapStateToProps(state) {
@@ -17,9 +17,6 @@ function mapDispatchToProps(dispatch) {
   return {
     createNewPlaylist: (playlistName) => {
       dispatch(createNewPlaylist(playlistName));
-    },
-    setCurrentPlaylistCode: (code) => {
-      dispatch(setCurrentPlaylistCode(code));
     },
     loadPlaylist: (code) => {
       dispatch(loadPlaylist(code));

@@ -17,13 +17,6 @@ function generatePromise (body) {
   return promise;
 }
 
-export function setCurrentPlaylistCode(playlistCode) {
-  return {
-    type: 'SET_CURRENT_PLAYLIST_CODE',
-    playlistCode
-  }
-}
-
 export function receiveSocket(socketId) {
   return {
     type: 'RECEIVE_SOCKET',
