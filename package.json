@@ -30,6 +30,7 @@
     "body-parser": "^1.14.1",
     "ejs": "^2.4.1",
     "express": "^4.13.3",
+    "file-loader": "^0.8.5",
     "history": "^2.0.0-rc2",
     "immutable": "^3.7.6",
     "mongoose": "^4.3.6",
@@ -45,6 +46,7 @@
     "socket.io": "^1.4.5",
     "socket.io-client": "^1.4.5",
     "superagent": "^1.7.2",
+    "url-loader": "^0.5.7",
     "webpack": "^1.12.11"
   },
   "devDependencies": {

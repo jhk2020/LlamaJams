@@ -5,8 +5,14 @@ export default function configEvents (io) {
 
     socket.on('playlist mounted', playlistCode => {
       socket.join(playlistCode);
-      io.to(playlistCode).emit('receive socket', socket.id);
+      io.to(socket.id).emit('receive socket', socket.id);
+      // send to the playlistcode to inform a new guest has joined
+      // check if it's owner
+      // if owner, send current track info back to server
+      // on event, server sends to new user which track we're currently on
     })
+
+    // new event for when song ends, update current track
 
     socket.on('leave playlist', playlistCode => {
       socket.leave(playlistCode);

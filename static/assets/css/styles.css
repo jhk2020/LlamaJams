@@ -2,6 +2,11 @@
     Initial Style
    ================ */
 
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('../proxima-nova-regular.ttf');
+}
+
 body {
   font-family: 'Proxima Nova';
   margin: 0;

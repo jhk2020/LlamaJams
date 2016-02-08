@@ -27,8 +27,8 @@ export default class Playlist extends Component {
       addTrackToQueue(track)
     });
     socket.on('track upvoted', trackId => {
-      upVote(trackId)}
-    );
+      upVote(trackId)
+    });
     socket.on('track downvoted', trackId => {
       downVote(trackId)
     });
