@@ -122,6 +122,10 @@ input[type=submit] {
   height: 42px;
 }
 
+.forms-container {
+  margin-bottom: 30px;
+}
+
 /* =====================
       MOBILE: PLAYER
    ===================== */

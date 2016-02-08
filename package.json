@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LlamaJams/LlamaJams.git"
+    "url": "git+https://github.com/jhk2020/LlamaJams.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/LlamaJams/LlamaJams/issues"
+    "url": "https://github.com/jhk2020/LlamaJams/issues"
   },
-  "homepage": "https://github.com/LlamaJams/LlamaJams",
+  "homepage": "https://github.com/jhk2020/LlamaJams",
   "dependencies": {
     "babel-core": "^6.4.0",
     "babel-loader": "^6.2.1",
