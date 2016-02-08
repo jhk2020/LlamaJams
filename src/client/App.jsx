@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import configStore from '../common/store/ConfigStore';
+import configStore from '../common/store/configStore';
 import getRoutes from '../common/routes/routes';
 import { Router, browserHistory, match } from 'react-router';
 import { fromJS } from 'immutable';
