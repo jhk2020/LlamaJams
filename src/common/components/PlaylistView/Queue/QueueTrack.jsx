@@ -4,8 +4,8 @@ import React, { Component } from 'react';
    constructor(props) {
      super(props);
      this.state = {
-       upvoted: false,
-       downvoted: false
+       upvoted: 0,
+       downvoted: 0
      }
    }
 
@@ -14,7 +14,7 @@ import React, { Component } from 'react';
        id: this.props.track.get('_id'),
        playlistCode:  this.props.track.get('playlistCode')
      });
-     this.setState({ upvoted: true });
+     this.setState({ upvoted: this.state.upvoted++ });
    };
 
    downVote = () => {
@@ -22,7 +22,7 @@ import React, { Component } from 'react';
        id: this.props.track.get('_id'),
        playlistCode:  this.props.track.get('playlistCode')
      });
-     this.setState({ downvoted: true });
+     this.setState({ downvoted: this.state.upvoted-- });
    };
 
    render() {
@@ -35,9 +35,9 @@ import React, { Component } from 'react';
            <p className='queue-track-title'>{track.get('title')}</p>
          </div>
          <div className='vote-buttons'>
-           <img src="/static/assets/img/up.png" onClick={ !this.state.upvoted ? this.upVote : null } />
+           <img src="/static/assets/img/up.png" onClick={ this.state.upvoted < 1 ? this.upVote : null } />
             <p className="vote-number">{track.get('vote')}</p>
-            <img src="/static/assets/img/down.png" onClick={ !this.state.downvoted ? this.downVote : null } />
+            <img src="/static/assets/img/down.png" onClick={ this.state.downvoted > -1 ? this.downVote : null } />
          </div>
        </div>
      )

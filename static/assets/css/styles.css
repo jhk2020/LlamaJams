@@ -73,7 +73,7 @@ input[type=submit] {
 }
 
 #plus-button {
-  width: 1.75em;
+  width: 1.6em;
   height: auto;
   margin: auto;
 }
@@ -308,7 +308,7 @@ input[type=submit] {
 .queried-track {
   position: relative;
   height: 300px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.35) 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 20%,rgba(0,0,0,0.5) 100%);
 }
 
 .queried-track-title {
@@ -343,8 +343,8 @@ input[type=submit] {
   position: absolute;
   width: 40px;
   height: auto;
-  right: 20px;
-  bottom: 20px;
+  right: 15px;
+  bottom: 15px;
 }
 
 
