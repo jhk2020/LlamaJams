@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 
 export default class Player extends Component {
   componentWillReceiveProps(nextProps) {
-    debugger;
     if (!nextProps.currentTrack && !nextProps.currentStream && nextProps.isOwner) {
       this.props.actions.startPlaying();
-    } else if (nextProps.currentTrack && nextProps.isOwner) {
-      console.log('NEW CURRENT TRACK SENT', nextProps.currentTrack);
+    } else if (!this.props.currentTrack && nextProps.currentTrack && nextProps.isOwner) {
       this.props.socket.emit('new current track', nextProps.currentTrack);
     }
   }
@@ -15,7 +13,6 @@ export default class Player extends Component {
     const { socket, isOwner, actions } = this.props;
     socket.on('new guest entered', () => {
       if (isOwner) {
-        console.log('NEW GUEST ENTERED')
         if (this.props.currentTrack) {
           console.log('HERE IS THE CURRENT TRACK ', this.props.currentTrack);
           socket.emit('current track', this.props.currentTrack);
@@ -23,7 +20,6 @@ export default class Player extends Component {
       }
     });
     socket.on('current track', track => {
-      debugger;
       console.log('CURRENT TRACK RECEIVED', track)
       actions.setCurrentTrackForGuests(track);
     });
@@ -65,7 +61,10 @@ export default class Player extends Component {
                     <img onClick={ skipSong } src="/static/assets/img/skip.png" />
                   </div>
                   : null}
-                <h3 id="now-playing-inner-title">{title}</h3>
+                <div id="now-playing-inner-title">
+                  <h3>{user}</h3>
+                  <h2>{title}</h2>
+                </div>
               </div>
             </div>
           : placeholder }
@@ -73,6 +72,7 @@ export default class Player extends Component {
           <div id="now-playing-outer-title">
             <h3>{user}</h3>
             <h2>{title}</h2>
+            <span id='wide-playlist-code'>CODE: { playlistCode }</span>
           </div>
           <span id='playlist-code'>CODE: { playlistCode }</span>
         </div>

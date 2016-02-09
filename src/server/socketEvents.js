@@ -6,18 +6,15 @@ export default function configEvents (io) {
     socket.on('playlist mounted', playlistCode => {
       socket.join(playlistCode);
       io.to(socket.id).emit('receive socket', socket.id);
-      console.log('here is a socket id', socket.id)
 
       io.to(playlistCode).emit('new guest entered');
 
       socket.on('current track', track => {
-        console.log('CURRENT TRACK YO:', track)
         socket.broadcast.to(track.playlistCode).emit('current track', track);
       });
     })
 
     socket.on('new current track', (track) => {
-      console.log('NEW CURRENT TRACK', track)
       socket.broadcast.to(track.playlistCode).emit('NEW current track', track);
     })
 

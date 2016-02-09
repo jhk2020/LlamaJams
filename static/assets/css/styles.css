@@ -49,10 +49,16 @@ input[type=submit] {
 .title-home {
   text-align: center;
   color: white;
+  margin: 10px;
+  font-size: 1.7em;
 }
 
 #main {
   text-align: center;
+}
+
+.scrollBox {
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ================
@@ -67,7 +73,7 @@ input[type=submit] {
 }
 
 #plus-button {
-  width: 1.5em;
+  width: 1.75em;
   height: auto;
   margin: auto;
 }
@@ -75,8 +81,8 @@ input[type=submit] {
 #plus-button-container {
   display: flex;
   position: absolute;
-  top: 9px;
-  right: 10px;
+  top: 8px;
+  right: 12px;
   z-index: 2;
   height: 35px;
   width: 35px;
@@ -90,7 +96,7 @@ input[type=submit] {
 
 .llama-logo-container {
   width: 35%;
-  margin: 20px auto;
+  margin: 35px auto;
   min-width: 185px;
   max-width: 250px;
 }
@@ -141,7 +147,7 @@ input[type=submit] {
 }
 
 #playlist-code {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
   border: 1px solid #F16256;
   padding: 7px 20px;
@@ -162,8 +168,19 @@ input[type=submit] {
   position: absolute;
   color: white;
   bottom: 10px;
-  font-size: 18px;
-  padding: 0 15px;
+  font-size: 12px;
+  padding: 10px 20px;
+  text-align: left;
+  margin-left: 7px;
+  margin-bottom: 5px;
+}
+
+#now-playing-inner-title h3 {
+  margin: 0 0 5px 0;
+}
+
+#now-playing-inner-title h2 {
+  margin: 0;
 }
 
 #now-playing-outer-title {
@@ -268,7 +285,7 @@ input[type=submit] {
 
 .searchbar input {
   font-family: 'Proxima Nova';
-  font-size: 20px;
+  font-size: 25px;
   color: #fff;
   border-width: 0px;
   width: 100%;
@@ -339,15 +356,6 @@ input[type=submit] {
 
   .title-playlist {
     font-size: 2em;
-  }
-
-  #plus-button {
-    width: 2em;
-  }
-
-  #plus-button-container {
-    margin-top: 12px;
-    margin-right: 15px;
   }
 }
 
@@ -423,26 +431,38 @@ input[type=submit] {
     display: none;
   }
 
+  #playlist-code {
+    display: none;
+  }
+
   #now-playing-outer-title {
     display: block;
     position: relative;
-    width: 40%;
-    float: right;
-    margin-top: 145px;
+    width: 50%;
+    margin: auto;
+    padding: 40px;
   }
 
   #now-playing-outer-title h3 {
     font-weight: bolder;
   }
 
-  #image-placeholder {
-    margin: auto;
+  #now-playing-outer-title h2 {
+    margin-top: 10px;
   }
 
-  #playlist-code {
+  #wide-playlist-code {
+    display: block;
     margin: auto;
-    font-size: 30px;
-    width: 30%;
+    font-size: 20px;
+    font-weight: bold;
+    border: 1px solid #F16256;
+    width: 50%;
+    padding: 7px 20px;
+  }
+
+  #image-placeholder {
+    margin: auto;
   }
 
 /* ======================

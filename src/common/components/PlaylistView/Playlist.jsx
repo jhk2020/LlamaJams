@@ -36,7 +36,7 @@ export default class Playlist extends Component {
 
     $('#plus-button-container').click(function() {
       if ($(this).css('transform') == 'none') {
-        $(this).css('transform', 'rotate(-45deg)');
+        $(this).css('transform', 'rotate(45deg)');
       } else {
         $(this).css('transform', '');
       }
@@ -78,7 +78,7 @@ export default class Playlist extends Component {
 
   menuWrap = (isOpen) => {
     return {
-      top: this.state.headerHeight + 15,
+      top: this.state.headerHeight + 10,
       position: 'fixed',
       display: !isOpen ? 'none' : 'block',
       left: 0,

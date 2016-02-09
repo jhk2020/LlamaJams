@@ -19,8 +19,8 @@ export default class QueryResults extends Component {
   styling = () => {
     var height = this.state.windowHeight - this.state.headerHeight;
     return {
-      overflowY: 'auto',
-      overflowX: 'none',
+      overflowY: 'scroll',
+      overflowX: 'hidden',
       height: this.props.trackResults.size > 0 ? height - 100 + 'px' : null,
       paddingTop: '75px'
     }

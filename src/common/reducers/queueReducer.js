@@ -13,7 +13,6 @@ export default function queue(state = List(), action) {
       return state.slice(1);
 
     case 'SET_CURRENT_TRACK_FOR_GUESTS':
-      debugger;
       const sliceIndex = state.findIndex(track => track.get('_id') === action.track._id);
       return state.slice(sliceIndex + 1);
 

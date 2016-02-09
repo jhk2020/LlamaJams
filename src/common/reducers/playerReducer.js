@@ -15,7 +15,6 @@ export default function player(state = initialState, action) {
            .set('jukeboxPlaying', true);
       });
     case 'SET_CURRENT_TRACK_FOR_GUESTS':
-    debugger;
       return state.update('currentTrack', track => fromJS(action.track));
     case 'CONTINUE_PLAYING':
       return state.update('jukeboxPlaying', boolean => true);

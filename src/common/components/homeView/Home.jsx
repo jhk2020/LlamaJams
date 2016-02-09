@@ -18,7 +18,6 @@ export default class Home extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    debugger;
     if (nextProps.currentPlaylist.get('code')) {
       document.activeElement.blur();
       this.props.moveTo(`/playlist/${nextProps.currentPlaylist.get('code')}`);
@@ -26,7 +25,6 @@ export default class Home extends Component {
   }
 
   goToPlaylist = (e) => {
-    debugger;
     e.preventDefault();
     if (this.state.codeInput !== '') {
       this.props.loadPlaylist(this.state.codeInput);
