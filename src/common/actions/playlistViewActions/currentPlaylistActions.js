@@ -12,7 +12,6 @@ function generatePromise (body) {
   const promise = new Promise((resolve, reject) => {
     request
     .get(`https://llamajams.herokuapp.com/api/playlist/${body}`)
-    .withCredentials()
     .end((err, data) => err ? reject(err) : resolve(data));
   });
   return promise;
