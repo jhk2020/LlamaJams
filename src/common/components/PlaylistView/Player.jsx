@@ -2,9 +2,35 @@ import React, { Component } from 'react';
 
 export default class Player extends Component {
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.currentTrack && !nextProps.currentStream) {
+    debugger;
+    if (!nextProps.currentTrack && !nextProps.currentStream && nextProps.isOwner) {
       this.props.actions.startPlaying();
+    } else if (nextProps.currentTrack && nextProps.isOwner) {
+      console.log('NEW CURRENT TRACK SENT', nextProps.currentTrack);
+      this.props.socket.emit('new current track', nextProps.currentTrack);
     }
+  }
+
+  componentDidMount() {
+    const { socket, isOwner, actions } = this.props;
+    socket.on('new guest entered', () => {
+      if (isOwner) {
+        console.log('NEW GUEST ENTERED')
+        if (this.props.currentTrack) {
+          console.log('HERE IS THE CURRENT TRACK ', this.props.currentTrack);
+          socket.emit('current track', this.props.currentTrack);
+        }
+      }
+    });
+    socket.on('current track', track => {
+      debugger;
+      console.log('CURRENT TRACK RECEIVED', track)
+      actions.setCurrentTrackForGuests(track);
+    });
+    socket.on('NEW current track', track => {
+      console.log('NEW CURRENT TRACK CHANGED', track)
+      actions.setCurrentTrackForGuests(track);
+    });
   }
 
   render() {

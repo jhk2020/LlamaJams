@@ -35,6 +35,13 @@ function setCurrentTrack(stream, track) {
   }
 }
 
+export function setCurrentTrackForGuests(track) {
+  return {
+    type: 'SET_CURRENT_TRACK_FOR_GUESTS',
+    track
+  }
+}
+
 function playNextTrack() {
   return {
     type: 'PLAY_NEXT_TRACK'

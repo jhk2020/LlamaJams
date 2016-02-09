@@ -8,7 +8,6 @@ export default function promiseMiddleware() {
     return promise
       .then(
         res => {
-          debugger;
           next({ res: res.body, type: SUCCESS })
         }
       ).catch(error => {

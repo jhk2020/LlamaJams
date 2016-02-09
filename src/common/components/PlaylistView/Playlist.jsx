@@ -21,6 +21,7 @@ export default class Playlist extends Component {
     const { currentPlaylist, socket, receiveSocket, addTrackToQueue, upVote, downVote } = this.props;
     socket.emit('playlist mounted', currentPlaylist.get('code'));
     socket.on('receive socket', socketId => {
+      console.log('SOCKET RECEIVED')
       receiveSocket(socketId)
     });
     socket.on('track added', track => {
@@ -94,7 +95,7 @@ export default class Playlist extends Component {
           <img id='plus-button' src='/static/assets/img/plus.png' />
         </div>
         <div className='overlay' onClick={this.state.isOpen ? this.toggleNavbar : null} style={this.overlay(this.state.isOpen)}></div>
-        <Player />
+        <Player socket={this.props.socket} />
         <Queue socket={this.props.socket} isOpen={this.state.isOpen} />
 
         <div className='query-container' style={this.menuWrap(this.state.isOpen)}>

@@ -6,17 +6,17 @@ import * as actionCreators from '../../actions/playlistViewActions/playerActions
 
 function mapStateToProps(state) {
   const jukeboxPlaying = state.player.get('jukeboxPlaying'),
-      trackPosition = state.player.get('trackPosition'),
       currentTrack = state.player.get('currentTrack'),
       currentStream = state.player.get('currentStream'),
+      socketId = state.currentPlaylist.get('socketId'),
       playlistCode = state.currentPlaylist.get('code');
 
   return {
     jukeboxPlaying,
-    trackPosition,
     currentTrack,
     currentStream,
     playlistCode,
+    socketId,
     isOwner: state.currentPlaylist.get('isOwner')
   }
 }
