@@ -35,7 +35,6 @@ export default class QueryResults extends Component {
 
   render() {
     const { trackResults, playlistCode, socket } = this.props;
-
     return (
       <div className='scrollBox' onScroll={ this.scrollHandler } style={ this.styling() }>
         <div className='track-results'>
