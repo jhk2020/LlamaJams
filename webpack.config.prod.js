@@ -16,10 +16,6 @@ module.exports = {
       test: /\.jsx?$/,
       exclude: /node_modules/,
       loader: 'babel'
-    },
-    {
-      test: /\.tff?$/,
-      loader: 'url?limit=10000'
     }]
   },
   plugins: [

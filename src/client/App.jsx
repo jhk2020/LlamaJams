@@ -7,7 +7,7 @@ import { Router, browserHistory, match } from 'react-router';
 import { fromJS } from 'immutable';
 import createLocation from 'history/lib/createLocation';
 
-let initialState;
+let initialState, assets;
 if(window.__INITIAL_STATE__) {
   try {
     initialState = JSON.parse(unescape(window.__INITIAL_STATE__));

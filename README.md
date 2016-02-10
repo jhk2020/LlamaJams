@@ -84,6 +84,5 @@ npm start
 ## TODOS
 - [BUG]: Render error page when wrong code is submitted from the URL
 - [BUG]: Implement express-session to remember playlist ownership (i.e. to provide playback functionality if owner)
-- [BUG]: Update new guests on current track, plus when current track changes
 - Cross-browser support for CSS
 - CSS clean-up and more animations in general for cleaner UX
