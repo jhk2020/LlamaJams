@@ -14,17 +14,14 @@ export default class Player extends Component {
     socket.on('new guest entered', () => {
       if (isOwner) {
         if (this.props.currentTrack) {
-          console.log('HERE IS THE CURRENT TRACK ', this.props.currentTrack);
           socket.emit('current track', this.props.currentTrack);
         }
       }
     });
     socket.on('current track', track => {
-      console.log('CURRENT TRACK RECEIVED', track)
       actions.setCurrentTrackForGuests(track);
     });
     socket.on('NEW current track', track => {
-      console.log('NEW CURRENT TRACK CHANGED', track)
       actions.setCurrentTrackForGuests(track);
     });
   }

@@ -9,7 +9,8 @@ function mapStateToProps(state) {
   const { home, currentPlaylist } = state;
   return {
     errorMessage: home.errorMessage,
-    currentPlaylist
+    isCreating: home.isCreating,
+    playlistCode: currentPlaylist.get('code')
   }
 }
 
