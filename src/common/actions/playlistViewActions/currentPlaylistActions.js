@@ -11,7 +11,7 @@ export function loadPlaylist(code) {
 function generatePromise (body) {
   const promise = new Promise((resolve, reject) => {
     request
-    .get(`http://localhost:5000/api/playlist/${body}`)
+    .get(`https://llamajams.herokuapp.com/api/playlist/${body}`)
     .end((err, data) => err ? reject(err) : resolve(data));
   });
   return promise;
