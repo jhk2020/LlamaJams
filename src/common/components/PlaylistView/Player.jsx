@@ -33,6 +33,8 @@ export default class Player extends Component {
     if (currentTrack) {
       if (currentTrack.get('artwork_url')) {
         picUrl = currentTrack.get('artwork_url').replace(/large/, 't300x300');
+      } else {
+        picUrl = '/static/assets/img/kuzco.png';
       }
     }
     const title = currentTrack ? currentTrack.get('title') : null;
