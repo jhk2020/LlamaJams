@@ -10,13 +10,20 @@ export default class QueryResults extends Component {
     }
   }
 
-  scrollHandler = () => {
+  componentDidMount() {
+    this.setState({
+      windowHeight: $(window).height(),
+      headerHeight: $('#header-container').height()
+    });
+  };
+
+  handleScroll = () => {
     if($('.scrollBox').scrollTop() === $('.scrollBox').prop('scrollHeight') - $('.scrollBox').prop('clientHeight')) {
       this.props.fetchMoreSongs(this.props.searchbarQuery);
     }
   };
 
-  styling = () => {
+  scrollBoxStyle = () => {
     var height = this.state.windowHeight - this.state.headerHeight;
     return {
       overflowY: 'scroll',
@@ -26,26 +33,19 @@ export default class QueryResults extends Component {
     }
   };
 
-  componentDidMount() {
-    this.setState({
-      windowHeight: $(window).height(),
-      headerHeight: $('#header-container').height()
-    });
-  };
-
   render() {
     const { trackResults, playlistCode, socket } = this.props;
-    return (
-      <div className='scrollBox' onScroll={ this.scrollHandler } style={ this.styling() }>
-        <div className='track-results'>
-          {trackResults.map(track => (
-            <SearchTrack key={track.get('id')}
-              track={track}
+    return <div className='scrollBox' onScroll={ this.handleScroll } style={ this.scrollBoxStyle() }>
+      <div className='track-results'>
+        {trackResults.map(track => (
+          <SearchTrack
+              key={track.get('id')}
               playlistCode={playlistCode}
-              socket={socket} />
-          ))}
-        </div>
+              socket={socket}
+              track={track}
+          />
+        ))}
       </div>
-    )
+    </div>
   }
 }

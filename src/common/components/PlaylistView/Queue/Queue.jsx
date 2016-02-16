@@ -1,21 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import QueueTrack from './QueueTrack';
 
-export default class Queue extends Component {
-  queueFix = (isOpen) => {
+const Queue = ({ queue, actions, socket, isOpen}) => {
+  queueStyle = (isOpen) => {
     return {
       position: isOpen ? 'fixed' : null,
       width: isOpen ? 'null' : '100%'
     }
   };
-  
-  render() {
-    const { queue, actions, socket, isOpen } = this.props;
-    const queueRender = queue.map(track => <QueueTrack socket={socket} track={track} key={track.get('_id')}/>);
-    return (
-      <div id='queue-container' style={this.queueFix(isOpen)}>
-        { queue.size > 0 ? queueRender : null }
-      </div>
-    )
-  }
+
+  const queueRender = queue.map(track => <QueueTrack socket={socket} track={track} key={track.get('_id')}/>);
+
+  return <div id='queue-container' style={queueStyle(isOpen)}>
+    { queue.size > 0 ? queueRender : null }
+  </div>
 }

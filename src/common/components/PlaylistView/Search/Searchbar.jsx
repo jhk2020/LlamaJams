@@ -7,28 +7,28 @@ export default class Searchbar extends Component {
     }
   }
 
-  submitHandler = (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.actions.fetchSongs(this.props.searchbarQuery);
   };
 
   render() {
     const { searchbarQuery, actions } = this.props;
-    return (
-       <div className='searchbar-container'>
-         <div className='searchbar'>
-           <form onSubmit={this.submitHandler}>
-             <input  name='query'
-                     value={searchbarQuery}
-                     type='text'
-                     onChange={(event) => {
-                       actions.updateQuery(event.target.value);
-                     }}
-                     id='searchbar-input'
-                     autoComplete='off' />
-           </form>
-         </div>
-       </div>
-     )
+    return <div className='searchbar-container'>
+     <div className='searchbar'>
+       <form onSubmit={this.handleSubmit}>
+         <input
+             autoComplete='off'
+             id='searchbar-input'
+             name='query'
+             onChange={(event) => {
+               actions.updateQuery(event.target.value);
+             }}
+             type='text'
+             value={searchbarQuery}
+         />
+       </form>
+     </div>
+   </div>
   }
 }

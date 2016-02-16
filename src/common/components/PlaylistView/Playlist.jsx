@@ -44,12 +44,16 @@ export default class Playlist extends Component {
     this.setState({headerHeight: $('#header-container').height()});
   }
 
-  leavePlaylist = () => {
-    socket.emit('leave playlist');
-    this.props.leavePlaylist();
-  };
+  // componentWillUnmount() {
+  //   this.leavePlaylist();
+  // }
+  //
+  // leavePlaylist = () => {
+  //   socket.emit('leave playlist');
+  //   this.props.leavePlaylist();
+  // };
 
-  toggleNavbar = () => {
+  handleClick = () => {
     this.setState({ isOpen: !this.state.isOpen }, () => {
       if ($) {
         if (this.state.isOpen) {
@@ -61,7 +65,7 @@ export default class Playlist extends Component {
     });
   };
 
-  overlay = (isOpen) => {
+  overlayStyle = (isOpen) => {
     return {
       position: 'fixed',
       zIndex: 1,
@@ -75,7 +79,7 @@ export default class Playlist extends Component {
     }
   };
 
-  menuWrap = (isOpen) => {
+  queryContainerStyle = (isOpen) => {
     return {
       top: this.state.headerHeight + 10,
       position: 'fixed',
@@ -88,19 +92,16 @@ export default class Playlist extends Component {
   };
 
   render() {
-    return (
-      <div id='main' className='clearfix'>
-        <div id='plus-button-container' onClick={this.toggleNavbar}>
-          <img id='plus-button' src='/static/assets/img/plus.png' />
-        </div>
-        <div className='overlay' onClick={this.state.isOpen ? this.toggleNavbar : null} style={this.overlay(this.state.isOpen)}></div>
-        <Player socket={this.props.socket} />
-        <Queue socket={this.props.socket} isOpen={this.state.isOpen} />
-
-        <div className='query-container' style={this.menuWrap(this.state.isOpen)}>
-          <Search socket={this.props.socket} />
-        </div>
+    return <div id='main' className='clearfix'>
+      <div id='plus-button-container' onClick={this.handleClick}>
+        <img id='plus-button' src='/static/assets/img/plus.png' />
       </div>
-    );
+      <div className='overlay' onClick={this.state.isOpen ? this.handleClick : null} style={this.overlayStyle(this.state.isOpen)}></div>
+      <Player socket={this.props.socket} />
+      <Queue socket={this.props.socket} isOpen={this.state.isOpen} />
+      <div className='query-container' style={this.queryContainerStyle(this.state.isOpen)}>
+        <Search socket={this.props.socket} />
+      </div>
+    </div>
   }
 };

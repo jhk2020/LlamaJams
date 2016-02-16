@@ -14,7 +14,7 @@ export default class CreateForm extends Component {
     });
   };
 
-  submitHandler = (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
     if (!this.state.playlistName) {
       this.setState({
@@ -29,20 +29,19 @@ export default class CreateForm extends Component {
   };
 
   render() {
-    return (
-      <div>
-        <form onSubmit={this.submitHandler}>
-          <input
-            id='start-party-form'
-            className='forms'
-            type='text'
-            placeholder='Name your party...'
-            value={this.state.playlistName}
+    return <div>
+      <form onSubmit={this.handleSubmit}>
+        <input
             autoComplete='off'
-            onChange={this.handlePlaylistChange} />
-        </form>
-        {this.props.errorMessage ? <p>{this.props.errorMessage}</p> : null}
-      </div>
-    )
+            className='forms'
+            id='start-party-form'
+            onChange={this.handlePlaylistChange}
+            placeholder='Name your party...'
+            type='text'
+            value={this.state.playlistName}
+        />
+      </form>
+      {this.props.errorMessage ? <p>{this.props.errorMessage}</p> : null}
+    </div>
   }
 }

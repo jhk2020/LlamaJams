@@ -4,11 +4,11 @@ export default class QueriedTrack extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      voted: false
+      added: false
     }
   }
 
-  clickHandler = () => {
+  handleClick = () => {
     const { socket, track, playlistCode } = this.props;
     const newTrack = {
       soundCloudId: track.get('id'),
@@ -19,7 +19,7 @@ export default class QueriedTrack extends Component {
       vote: 0
     };
     socket.emit('add track', newTrack);
-    this.setState({voted: true});
+    this.setState({added: true});
   };
 
   render() {
@@ -30,19 +30,19 @@ export default class QueriedTrack extends Component {
     } else {
       picUrl = '/static/assets/img/kuzco.png';
     }
-    return (
-      <div className='queried-track-container'>
-        <div className='queried-track'>
-          <img src={picUrl} className='queried-track-album-cover' />
-          <img className='add-track-button'
-               src={!this.state.voted ? '/static/assets/img/search_plus.png' : '/static/assets/img/search_check.png'}
-               onClick={ !this.state.voted ? this.clickHandler : null } />
-        </div>
-        <div className='queried-track-title'>
-          <p>{ track.getIn(['user', 'username']) }</p>
-          <p>{ track.get('title') }</p>
-        </div>
+    return <div className='queried-track-container'>
+      <div className='queried-track'>
+        <img src={picUrl} className='queried-track-album-cover' />
+        <img
+            className='add-track-button'
+            onClick={ !this.state.added ? this.handleClick : null }
+            src={!this.state.added ? '/static/assets/img/search_plus.png' : '/static/assets/img/search_check.png'}
+        />
       </div>
-    )
+      <div className='queried-track-title'>
+        <p>{track.getIn(['user', 'username'])}</p>
+        <p>{track.get('title')}</p>
+      </div>
+    </div>
   }
 };

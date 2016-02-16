@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Header from '../containers/Home/HeaderContainer';
 
 export default class Main extends Component {
-
   render() {
     return (
       <div>
