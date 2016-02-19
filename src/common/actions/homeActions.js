@@ -11,7 +11,7 @@ export function createNewPlaylist(playlistName) {
 function generatePromise (body) {
   const promise = new Promise((resolve, reject) => {
     request
-    .post('http://localhost:5000/api/playlist')
+    .post('https://llamajams.herokuapp.com/api/playlist')
     .set('Content-Type', 'application/json')
     .send(JSON.stringify(body))
     .end((err, data) => err ? reject(err) : resolve(data));
