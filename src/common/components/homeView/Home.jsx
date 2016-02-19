@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import CreateForm from './CreateForm';
 import FontAwesome from 'react-fontawesome';
 

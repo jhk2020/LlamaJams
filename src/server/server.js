@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import path from 'path';
 import PrettyError from 'pretty-error';
@@ -22,6 +23,7 @@ import { RouterContext, match } from 'react-router';
 import createHistory from 'history/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
 import getRoutes from '../common/routes/routes';
+import reactCookie from 'react-cookie';
 
 // SOCKET.IO
 import SocketIo from 'socket.io';
@@ -55,6 +57,10 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser('llamajams', {
+  maxAge: 60000,
+  path: '/playlist:id'
+}));
 app.use(morgan('dev'));
 app.use('/static', express.static(__dirname + '/../../static'));
 app.use((req, res, next) => {
@@ -73,6 +79,7 @@ app.use('/api', apiRoutes);
 /*-------------------------------- SSR ---------------------------------------*/
 
 app.use((req, res) => {
+  console.log('cookie: ', req.cookies)
   const history = createHistory();
   const location = createLocation(req.originalUrl);
   const routes = getRoutes();
@@ -101,6 +108,7 @@ app.use((req, res) => {
         return Promise.all(promises);
       }
 
+      reactCookie.plugToRequest(req, res);
       fetchComponentData(store.dispatch, renderProps.components, renderProps.params)
       .then(() => {
         try {

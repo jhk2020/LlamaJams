@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import cookie from 'react-cookie';
 import Search from './Search/Search';
 import Queue from '../../containers/Playlist/Queue/QueueContainer';
 import Player from '../../containers/Playlist/PlayerContainer';
@@ -19,6 +20,16 @@ export default class Playlist extends Component {
 
   componentDidMount() {
     const { currentPlaylist, socket, receiveSocket, addTrackToQueue, upVote, downVote } = this.props;
+    // cookie configuration
+    if (currentPlaylist.get('isOwner') && !document.cookie) {
+      cookie.save('userInfo', {
+        isOwner: true,
+        playlistCode: currentPlaylist.get('code')
+      }, {
+        path: `/playlist/${currentPlaylist.get('code')}`
+      });
+    }
+    // socket events configuration
     socket.emit('playlist mounted', currentPlaylist.get('code'));
     socket.on('receive socket', socketId => {
       receiveSocket(socketId)
@@ -32,7 +43,7 @@ export default class Playlist extends Component {
     socket.on('track downvoted', trackId => {
       downVote(trackId)
     });
-
+    // icon animation
     $('#plus-button-container').click(function() {
       if ($(this).css('transform') == 'none') {
         $(this).css('transform', 'rotate(45deg)');

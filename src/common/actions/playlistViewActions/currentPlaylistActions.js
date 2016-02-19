@@ -1,5 +1,6 @@
 import request from 'superagent';
 import config from '../../../config';
+import cookie from 'react-cookie';
 
 export function loadPlaylist(code) {
   return {
@@ -10,8 +11,10 @@ export function loadPlaylist(code) {
 
 function generatePromise (body) {
   const promise = new Promise((resolve, reject) => {
+    const parsedCookie = cookie.load('userInfo') || {};
     request
     .get(`http://localhost:5000/api/playlist/${body}`)
+    .set('Cookie', parsedCookie)
     .end((err, data) => err ? reject(err) : resolve(data));
   });
   return promise;

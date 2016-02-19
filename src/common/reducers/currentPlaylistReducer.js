@@ -1,4 +1,5 @@
 import { Map, fromJS } from 'immutable';
+import cookie from 'react-cookie';
 
 const initialState = Map({
   _id: '',
@@ -14,9 +15,12 @@ export default function currentPlaylist(state = initialState, action) {
       return fromJS(action.res.playlist).update('isOwner', boolean => true);
 
     case 'LOAD_PLAYLIST_SUCCESS':
+      const parsedCookie = cookie.load('userInfo');
+      const isOwner = (parsedCookie && parsedCookie.playlistCode === action.res.playlist.code) ? true : false;
       var temp = Object.assign({}, action.res.playlist, {
         socketId: '',
-        error: ''
+        error: '',
+        isOwner
       })
       return fromJS(temp);
 

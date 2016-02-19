@@ -45,7 +45,7 @@ export default class Player extends Component {
         <img src='/static/assets/img/llama2.png' />
         {isOwner ? <span>Add some songs and click the llama!</span> : <span>Add your songs to the playlist!</span>}
       </div>
-      : null;
+    : null;
 
     return <div className='player'>
       {currentTrack ?
@@ -58,14 +58,14 @@ export default class Player extends Component {
                 <img onClick={ togglePlayButton } src={jukeboxPlaying ? '/static/assets/img/pause.png' : '/static/assets/img/play.png'} />
                 <img onClick={ skipSong } src="/static/assets/img/skip.png" />
               </div>
-              : null}
+            : null}
             <div id="now-playing-inner-title">
               <h3>{user}</h3>
               <h2>{title}</h2>
             </div>
           </div>
         </div>
-      : placeholder }
+      : placeholder}
       <br/>
       <div id="now-playing-outer-title">
         <h3>{user}</h3>
