@@ -28,7 +28,7 @@ export default class QueryResults extends Component {
     return {
       overflowY: 'scroll',
       overflowX: 'hidden',
-      height: this.props.trackResults.size > 0 ? height - 100 + 'px' : null,
+      height: this.props.trackResults.size > 0 ? height - 15 + 'px' : null,
       paddingTop: '75px'
     }
   };

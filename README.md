@@ -85,5 +85,4 @@ npm start
 - Better error handling (e.g. render error page when wrong code is submitted from the URL)
 - Export playlist to SoundCloud account
 - Exit playlist functionality
-- [BUG]: Implement express-session to remember playlist ownership (i.e. to provide playback functionality if owner)
 - CSS clean-up and more animations in general for cleaner UX

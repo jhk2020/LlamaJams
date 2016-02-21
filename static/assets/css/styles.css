@@ -81,8 +81,8 @@ input[type=submit] {
 #plus-button-container {
   display: flex;
   position: absolute;
-  top: 8px;
-  right: 12px;
+  top: 5px;
+  right: 10px;
   z-index: 2;
   height: 35px;
   width: 35px;
@@ -110,18 +110,15 @@ input[type=submit] {
 }
 
 .forms {
-  display: block;
   background-color: #F16256;
-  width: 90%;
   margin: auto;
-  height: 40px;
-  margin-bottom: 10px;
-  border-style: none;
-  text-align: center;
-  font-size: 1.2em;
-  border-radius: 5px;
-  max-width: 430px;
-  color: white;
+  min-width: 230px;
+  margin-bottom: 15px;
+  font-size: 27px;
+}
+
+.forms:hover {
+  background-color: #E25D4F;
 }
 
 #start-button {
@@ -130,6 +127,51 @@ input[type=submit] {
 
 .forms-container {
   margin-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.join-form {
+  margin: auto;
+  min-width: 230px;
+  width: 40%;
+}
+
+.create-form {
+  margin: auto;
+  min-width: 230px;
+  width: 40%;
+}
+
+.create-form .input-field label {
+  color: #F16256;
+}
+
+.join-form .input-field label {
+  color: #F16256;
+}
+
+.input-field input[type=text]:focus + label {
+  color: #F16256;
+}
+
+.create-form .input-field input[type=text]:focus {
+  border-bottom: 1px solid black;
+  box-shadow: 0 1px 0 0 black;
+}
+
+.join-form .input-field input[type=text]:focus {
+  border-bottom: 1px solid black;
+  box-shadow: 0 1px 0 0 black;
+}
+
+#start-party-input {
+  font-size: 20px;
+}
+
+#join-party-input {
+  font-size: 20px;
+
 }
 
 /* =====================
@@ -168,7 +210,6 @@ input[type=submit] {
   position: absolute;
   color: white;
   bottom: 10px;
-  font-size: 12px;
   padding: 10px 20px;
   text-align: left;
   margin-left: 7px;
@@ -177,9 +218,11 @@ input[type=submit] {
 
 #now-playing-inner-title h3 {
   margin: 0 0 5px 0;
+  font-size: 15px;
 }
 
 #now-playing-inner-title h2 {
+  font-size: 20px;
   margin: 0;
 }
 
@@ -295,6 +338,11 @@ input[type=submit] {
   padding: 6px 6px 6px 6px;
 }
 
+.searchbar input[type=text]:focus {
+  border-bottom: none;
+  box-shadow: none;
+}
+
 .track-results {
   display: flex;
   flex-wrap: wrap;
@@ -371,7 +419,9 @@ input[type=submit] {
   }
 
   .forms-container {
-    margin-top: 45px;
+    margin: 45px auto 30px;
+    width: 60%;
+    min-width: 690px;
   }
 
   #github-logo {
@@ -445,10 +495,12 @@ input[type=submit] {
 
   #now-playing-outer-title h3 {
     font-weight: bolder;
+    font-size: 20px;
   }
 
   #now-playing-outer-title h2 {
     margin-top: 10px;
+    font-size: 25px;
   }
 
   #wide-playlist-code {

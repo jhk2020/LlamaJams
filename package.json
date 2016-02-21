@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production node src/server/index.js",
     "build": "NODE_ENV=production webpack --display-error-details --config ./webpack.config.prod.js --progress --colors",
-    "dev": "NODE_ENV=development node src/server/index.js",
+    "dev": "NODE_ENV=development nodemon src/server/index.js",
     "postinstall": "npm run build"
   },
   "repository": {
@@ -36,6 +36,8 @@
     "file-loader": "^0.8.5",
     "history": "^2.0.0",
     "immutable": "^3.7.6",
+    "material-ui": "^0.14.4",
+    "materialize-css": "^0.97.5",
     "mongoose": "^4.3.6",
     "morgan": "^1.6.1",
     "pretty-error": "^2.0.0",
@@ -43,9 +45,11 @@
     "react-cookie": "^0.4.5",
     "react-dom": "^0.14.6",
     "react-fontawesome": "^0.3.3",
+    "react-materialize": "^0.14.2",
     "react-redux": "^4.0.6",
     "react-router": "^2.0.0-rc5",
     "react-router-redux": "^3.0.0",
+    "react-tap-event-plugin": "^0.2.2",
     "redux": "^3.0.5",
     "redux-thunk": "^1.0.3",
     "socket.io": "^1.4.5",

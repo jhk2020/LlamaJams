@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Input } from 'react-materialize';
 
 export default class CreateForm extends Component {
   constructor(props) {
@@ -29,14 +30,14 @@ export default class CreateForm extends Component {
   };
 
   render() {
-    return <div>
+    return <div className='create-form'>
       <form onSubmit={this.handleSubmit}>
-        <input
+        <Input
             autoComplete='off'
-            className='forms'
-            id='start-party-form'
+            id='start-party-input'
             onChange={this.handlePlaylistChange}
-            placeholder='Name your party...'
+            label='Name your party'
+            placeholder='e.g. DOPE ASS PAHTY'
             type='text'
             value={this.state.playlistName}
         />
