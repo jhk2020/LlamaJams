@@ -5,6 +5,9 @@ export function startPlaying() {
       const firstTrack = queue.first();
       SC.stream('/tracks/' + firstTrack.get('soundCloudId'))
       .then((stream) => {
+        if (stream.options.protocols[0] === 'rtmp') {
+          stream.options.protocols.splice(0, 1);
+        }
         dispatch(setCurrentTrack(stream, firstTrack));
         stream.play();
         stream.on('finish', () => {

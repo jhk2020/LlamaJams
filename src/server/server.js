@@ -79,7 +79,6 @@ app.use('/api', apiRoutes);
 /*-------------------------------- SSR ---------------------------------------*/
 
 app.use((req, res) => {
-  console.log('cookie: ', req.cookies)
   const history = createHistory();
   const location = createLocation(req.originalUrl);
   const routes = getRoutes();

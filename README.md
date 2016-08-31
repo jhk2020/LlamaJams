@@ -69,6 +69,7 @@ Used for real-time updates when guests add/upvote/downvote tracks to the playlis
 LlamaJams leverages media queries and flexbox for responsive web design. More work has to be done to have it be consistent across browsers.
 
 ## Development
+Make sure you have MongoDB up and running.
 ```
 npm install
 npm run dev
