@@ -1,5 +1,6 @@
 # LlamaJams
 In an effort to deepen my understanding of architecting an app with react and redux, I've built LlamaJams, a virtual jukebox using SoundCloud API.
+The application allows you to either create or join an existing playlist (via a randomly generated code). Hosts have access to player functionality like play, pause, and skip, while guests can only add new songs or vote on those already in the queue.
 
 ## Features
 Following technologies are used:
@@ -83,6 +84,7 @@ npm start
 ```
 
 ## TODOS
+- Tests
 - Better error handling (e.g. render error page when wrong code is submitted from the URL)
 - Export playlist to SoundCloud account
 - Exit playlist functionality
